@@ -30,7 +30,7 @@ class edge {
 		int dest_id; //Dest vertex
 		T weight; // Edge weight
 
-		vertex(int src_id, int dest_id, T weight) : src_id(src_id), dest_id(dest_id), weight(weight) { // constructor
+		edge(int v_src_id, int v_dest_id, T v_weight) : src_id(v_src_id), dest_id(v_dest_id), weight(v_weight) { // constructor
 		}
 };
 
@@ -40,7 +40,7 @@ class directed_graph {
 
 	private:
 		//vector<vertex<T>> vertice_list; 
-		vector<vector<vertex<T>> adj_list;
+		vector<vertex<T>> adj_list;
 
 	public:
 
@@ -99,7 +99,7 @@ bool directed_graph<T>::adjacent(const int& source_id, const int& dest_id) const
 
 template <typename T> //Done
 void directed_graph<T>::add_vertex(const vertex<T>& v) {
-	vertice_list.push_back(v);
+	adj_list.push_back(v);
 }
 
 template <typename T>
