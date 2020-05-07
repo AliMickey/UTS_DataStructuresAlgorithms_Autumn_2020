@@ -20,7 +20,7 @@ int main() {
 		cout << "ID: " << v.id << ", Weight: " << v.weight << endl;
 	}
 
-	cout << g1.contains(3) << endl;
+	cout << g1.contains(1) << endl;
 	cout << endl;
 }
 

@@ -14,71 +14,76 @@ using namespace std; // the standard namespace are here just in case.
 */
 template <typename T>
 class vertex {
+	public:
+		int id; // unique identifer for each vertex
+		T weight; // int, double, char, string, ...
 
-public:
-	int id; // unique identifer for each vertex
-	T weight; // int, double, char, string, ...
-
-	vertex(int v_id, T v_weight) : id(v_id), weight(v_weight) { // constructor
-	}
-
-	// add more functions here if you need to
+		vertex(int v_id, T v_weight) : id(v_id), weight(v_weight) { // constructor
+		}
 };
 
 
+template <typename T>
+class edge {
+	public:
+		int src_id; //Source vertex
+		int dest_id; //Dest vertex
+		T weight; // Edge weight
 
-/*
-	the graph class: similar to "Linked_List"
-*/
+		vertex(int src_id, int dest_id, T weight) : src_id(src_id), dest_id(dest_id), weight(weight) { // constructor
+		}
+};
+
+
 template <typename T>
 class directed_graph {
 
-private:
+	private:
+		//vector<vertex<T>> vertice_list; 
+		vector<vector<vertex<T>> adj_list;
 
-	vector<vertex<T>> vertice_list; // this is not design for this assignment
-	// if you are using adj_list instead of adj_matrix, you may need something like vector < vector<vertex<T>> adj_list;
+	public:
 
-public:
+		bool contains(const int&) const; //Returns true if the graph contains the given vertex_id, false otherwise.
+		bool adjacent(const int&, const int&) const; //Returns true if the first vertex is adjacent to the second, false otherwise.
 
-	bool contains(const int&) const; //Returns true if the graph contains the given vertex_id, false otherwise.
-	bool adjacent(const int&, const int&) const; //Returns true if the first vertex is adjacent to the second, false otherwise.
+		void add_vertex(const vertex<T>&); //Adds the passed in vertex to the graph (with no edges).
+		void add_edge(const int&, const int&, const T&); //Add an edge from source vertex to dest vertex
 
-	void add_vertex(const vertex<T>&); //Adds the passed in vertex to the graph (with no edges).
-	void add_edge(const int&, const int&, const T&); //Add an edge from source vertex to dest vertex
+		void remove_vertex(const int&); //Removes the given vertex. Should also clear any incident edges.
+		void remove_edge(const int&, const int&); //Removes the edge between the two vertices, if it exists.
 
-	void remove_vertex(const int&); //Removes the given vertex. Should also clear any incident edges.
-	void remove_edge(const int&, const int&); //Removes the edge between the two vertices, if it exists.
+		size_t in_degree(const int&) const; //Returns number of edges coming in to a vertex.
+		size_t out_degree(const int&) const; //Returns the number of edges leaving a vertex.
+		size_t degree(const int&) const; //Returns the degree of the vertex (both in edges and out edges).
 
-	size_t in_degree(const int&) const; //Returns number of edges coming in to a vertex.
-	size_t out_degree(const int&) const; //Returns the number of edges leaving a vertex.
-	size_t degree(const int&) const; //Returns the degree of the vertex (both in edges and out edges).
+		size_t num_vertices() const; //Returns the total number of vertices in the graph.
+		size_t num_edges() const; //Returns the total number of edges in the graph.
 
-	size_t num_vertices() const; //Returns the total number of vertices in the graph.
-	size_t num_edges() const; //Returns the total number of edges in the graph.
+		vector<vertex<T>> get_vertices(); //Returns a vector containing all the vertices.
+		vector<vertex<T>> get_neighbours(const int&); //Returns a vector containing all the vertices reachable from the given vertex. The vertex is not considered a neighbour of itself.
+		vector<vertex<T>> get_second_order_neighbors(const int&); // Returns a vector containing all the second_order_neighbours (i.e., neighbours of neighbours) of the given vertex. A vector cannot be considered a second_order_neighbor of itself.
+		bool reachable(const int&, const int&) const; //Returns true if the second vertex is reachable from the first (can you follow a path of out-edges to get from the first to the second?). Returns false otherwise.
+		bool contian_cycles() const; // Return true if the graph contains cycles (there is a path from any vertices directly/indirectly to itself), false otherwise.
 
-	vector<vertex<T>> get_vertices(); //Returns a vector containing all the vertices.
-	vector<vertex<T>> get_neighbours(const int&); //Returns a vector containing all the vertices reachable from the given vertex. The vertex is not considered a neighbour of itself.
-	vector<vertex<T>> get_second_order_neighbors(const int&); // Returns a vector containing all the second_order_neighbours (i.e., neighbours of neighbours) of the given vertex. A vector cannot be considered a second_order_neighbor of itself.
-	bool reachable(const int&, const int&) const; //Returns true if the second vertex is reachable from the first (can you follow a path of out-edges to get from the first to the second?). Returns false otherwise.
-	bool contian_cycles() const; // Return true if the graph contains cycles (there is a path from any vertices directly/indirectly to itself), false otherwise.
+		vector<vertex<T>> depth_first(const int&); //Returns the vertices of the graph in the order they are visited in by a depth-first traversal starting at the given vertex.
+		vector<vertex<T>> breadth_first(const int&); //Returns the vertices of the graph in the order they are visisted in by a breadth-first traversal starting at the given vertex.
 
-	vector<vertex<T>> depth_first(const int&); //Returns the vertices of the graph in the order they are visited in by a depth-first traversal starting at the given vertex.
-	vector<vertex<T>> breadth_first(const int&); //Returns the vertices of the graph in the order they are visisted in by a breadth-first traversal starting at the given vertex.
+		directed_graph<T> out_tree(const int&); //Returns a spanning tree of the graph starting at the given vertex using the out-edges. This means every vertex in the tree is reachable from the root.
 
-	directed_graph<T> out_tree(const int&); //Returns a spanning tree of the graph starting at the given vertex using the out-edges. This means every vertex in the tree is reachable from the root.
+		vector<vertex<T>> pre_order_traversal(const int&, directed_graph<T>&); // returns the vertices in the visiting order of a pre-order traversal of the minimum spanning tree starting at the given vertex.
+		vector<vertex<T>> in_order_traversal(const int&, directed_graph<T>&); // returns the vertices in the visiting order of an in-order traversal of the minimum spanning tree starting at the given vertex.
+		vector<vertex<T>> post_order_traversal(const int&, directed_graph<T>&); // returns the vertices in ther visitig order of a post-order traversal of the minimum spanning tree starting at the given vertex.
 
-	vector<vertex<T>> pre_order_traversal(const int&, directed_graph<T>&); // returns the vertices in the visiting order of a pre-order traversal of the minimum spanning tree starting at the given vertex.
-	vector<vertex<T>> in_order_traversal(const int&, directed_graph<T>&); // returns the vertices in the visiting order of an in-order traversal of the minimum spanning tree starting at the given vertex.
-	vector<vertex<T>> post_order_traversal(const int&, directed_graph<T>&); // returns the vertices in ther visitig order of a post-order traversal of the minimum spanning tree starting at the given vertex.
+		vector<vertex<T>> significance_sorting(); // Return a vector containing a sorted list of the vertices in descending order of their significance.
 
-	vector<vertex<T>> significance_sorting(); // Return a vector containing a sorted list of the vertices in descending order of their significance.
+	};
 
-};
 
 template <typename T> //Done
 bool directed_graph<T>::contains(const int& v_id) const {
-	for (int i = 0; i < vertice_list.size(); i++) { // Loop through each vertex
-		if (vertice_list[i].id == v_id) {
+	for (int i = 0; i < adj_list.size(); i++) { // Loop through each vertex
+		if (adj_list[i].id == v_id) {
 			return true;
 			break;
 		}
@@ -100,13 +105,15 @@ void directed_graph<T>::add_vertex(const vertex<T>& v) {
 template <typename T>
 void directed_graph<T>::add_edge(const int& source_id, const int& dest_id, const T& weight) { //Add an edge
 
+
+
 }
 
 template <typename T> //Done
 void directed_graph<T>::remove_vertex(const int& v_id) {
-		for (int i = 0; i < vertice_list.size(); i++) { // Loop through each vertex
-		if (vertice_list[i].id == v_id) {
-			vertice_list.erase(vertice_list.begin() + i); // Delete the vertex associated with provided id
+		for (int i = 0; i < adj_list.size(); i++) { // Loop through each vertex
+		if (adj_list[i].id == v_id) {
+			adj_list.erase(adj_list.begin() + i); // Delete the vertex associated with provided id
 			break;
 		}
 	}
@@ -132,7 +139,7 @@ size_t directed_graph<T>::num_edges() const { return 0; }
 
 template <typename T> //Done
 vector<vertex<T>> directed_graph<T>::get_vertices() { // Return all vertexes. 
-	return vertice_list;
+	return adj_list;
 }
 
 template <typename T>
