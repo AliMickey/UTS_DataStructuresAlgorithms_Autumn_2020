@@ -12,7 +12,7 @@ int main() {
 	g1.add_vertex(v1); //Add to graph
 	g1.add_vertex(v2);
 	g1.add_vertex(v3);
-	g1.add_edge(1, 3, 5); //Src, dest, weight
+	//g1.add_edge(1, 3, 5); //Src, dest, weight
 
 	g1.remove_vertex(2); // remove a vertex by id 
 

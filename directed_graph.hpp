@@ -23,7 +23,7 @@ class vertex {
 		//Constructors
 		vertex(int src_id, T v_weight) : src_id(src_id), v_weight(v_weight){};
 
-		edge(int src_id, int dest_id, T e_weight) : src_id(src_id), dest_id(dest_id), e_weight(e_weight){}
+		//edge(int src_id, int dest_id, T e_weight) : src_id(src_id), dest_id(dest_id), e_weight(e_weight){}
 };
 
 
