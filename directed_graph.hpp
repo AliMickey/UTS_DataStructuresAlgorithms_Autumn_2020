@@ -4,6 +4,10 @@
 #include<iostream>
 #include<string>
 #include<vector>
+#include<unordered_map>
+#include<set>
+#include<queue>
+#include<stack>
 // include more libraries here if you need to
 
 
@@ -15,15 +19,9 @@ using namespace std; // the standard namespace are here just in case.
 template <typename T>
 class vertex {
 	public:
-		int src_id; // unique identifer for each vertex
-		int dest_id;
-		T v_weight; // int, double, char, string, ...
-		T e_weight;
-
-		//Constructors
-		vertex(int src_id, T v_weight) : src_id(src_id), v_weight(v_weight){};
-
-		//edge(int src_id, int dest_id, T e_weight) : src_id(src_id), dest_id(dest_id), e_weight(e_weight){}
+		int id;
+		T weight;
+		vertex(int v_id, T v_weight) : id(v_id), weight(v_weight) {}	
 };
 
 
@@ -31,15 +29,18 @@ template <typename T>
 class directed_graph {
 
 	private:
-		vector<vertex<T>> adjList;
+		unordered_map<int, T> all_vertices;
+		unordered_map<int, unordered_map<int, T>> adj_list; // keep track of which index corresponds to which vertex_id
 
 	public:
+		directed_graph(); //A constructor for directed_graph. The graph should start empty.
+		~directed_graph(); //A destructor. Depending on how you do things, this may not be necessary.
 
-		bool contains(const int&) const; //Returns true if the graph contains the given vertex_id, false otherwise.
+		bool contains(const int&); //Returns true if the graph contains the given vertex_id, false otherwise.
 		bool adjacent(const int&, const int&) const; //Returns true if the first vertex is adjacent to the second, false otherwise.
 
 		void add_vertex(const vertex<T>&); //Adds the passed in vertex to the graph (with no edges).
-		void add_edge(const int&, const int&, const T&); //Add an edge from source vertex to dest vertex
+		void add_edge(const int&, const int&, const T&); //Adds a weighted edge from the first vertex to the second.
 
 		void remove_vertex(const int&); //Removes the given vertex. Should also clear any incident edges.
 		void remove_edge(const int&, const int&); //Removes the edge between the two vertices, if it exists.
@@ -70,14 +71,16 @@ class directed_graph {
 
 	};
 
+template <typename T>
+directed_graph<T>::directed_graph() {}
+
+template <typename T>
+directed_graph<T>::~directed_graph() {}
 
 template <typename T> //Done
-bool directed_graph<T>::contains(const int& v_id) const {
-	for (int i = 0; i < adjList.size(); i++) { // Loop through each vertex
-		if (adjList[i].src_id == v_id) {
-			return true;
-			break;
-		}
+bool directed_graph<T>::contains(const int& u_id) {
+	if(all_vertices.find(u_id)!=all_vertices.end()){
+		return true;
 	}
 	return false;
 }
@@ -90,22 +93,27 @@ bool directed_graph<T>::adjacent(const int& source_id, const int& dest_id) const
 
 template <typename T> //Done
 void directed_graph<T>::add_vertex(const vertex<T>& v) {
-	adjList.push_back(v);
+	if(!contains(v.id)){
+		all_vertices.insert({v.id, v.weight}); // step 1: add to all_vertices
+		adj_list[v.id]=unordered_map<int, T>(); // step 2: add to adj_list
+	}
 }
 
 template <typename T>
-void directed_graph<T>::add_edge(const int& src_id, const int& dest_id, const T& weight) { //Add an edge
-	//adj_list.push_back(src_id, dest_id, weight);
-
+void directed_graph<T>::add_edge(const int& u_id, const int& v_id, const T& uv_weight) {
+	if(contains(u_id) && contains(v_id)){ // add the edge only if both vertices are in the graph and the edge is not in the graph
+		if(adj_list[u_id].find(v_id)==adj_list[u_id].end()){
+			adj_list[u_id].insert({v_id, uv_weight});
+		}
+	}
 }
 
-template <typename T> //TODO REMOVE EDGES AS WELL
-void directed_graph<T>::remove_vertex(const int& v_id) {
-		for (int i = 0; i < adjList.size(); i++) { // Loop through each vertex
-		if (adjList[i].src_id == v_id) {
-			adjList.erase(adjList.begin() + i); // Delete the vertex associated with provided id
-			break;
-		}
+template <typename T>
+void directed_graph<T>::remove_vertex(const int& u_id) { // remove the vertex, as well as all the incident edges
+	all_vertices.erase(u_id); // step 1: remove from all_vertices
+	adj_list.erase(u_id); // step 2: remove from adj_list
+	for (auto& x: adj_list){ // x == pair<int, unordered_map<int,T>>
+		x.second.erase(u_id); // x.second == unordered_map<int, T>
 	}
 }
 
@@ -124,22 +132,34 @@ size_t directed_graph<T>::degree(const int& u_id) const { return 0; }
 template <typename T> //Done
 size_t directed_graph<T>::num_vertices() const { 
 	int amount = 0;
-	for (int i = 0; i < adjList.size(); i++) { // Loop through each vertex
+	for (int i = 0; i < adj_list.size(); i++) { // Loop through each vertex
 		amount += 1;
-		}
+		} 
 	return amount;
 	} 
 
 template <typename T>
 size_t directed_graph<T>::num_edges() const { return 0; }
 
-template <typename T> //Done
-vector<vertex<T>> directed_graph<T>::get_vertices() { // Return all vertexes. 
-	return adjList;
+template <typename T>
+vector<vertex<T>> directed_graph<T>::get_vertices() {
+	vector<vertex<T>> v;
+	for(auto x: all_vertices){
+		v.push_back(vertex<T>(x.first, x.second));
+	}
+	return v;
 }
 
 template <typename T>
-vector<vertex<T>> directed_graph<T>::get_neighbours(const int& u_id) { return vector<vertex<T>>(); }
+vector<vertex<T>> directed_graph<T>::get_neighbours(const int& u_id) {
+	vector<vertex<T>> v;
+	if(contains(u_id)){ // first make sure the vertex is in the graph
+		for (auto x: adj_list[u_id]){ // adj_list[u_id] is an unordered_map<int, T>
+			v.push_back(vertex<T>(x.first, all_vertices[x.first]));
+		}
+	}
+	return v;
+}
 
 template <typename T>
 vector<vertex<T>> directed_graph<T>::get_second_order_neighbors(const int& u_id) { return vector<vertex<T>>(); }
