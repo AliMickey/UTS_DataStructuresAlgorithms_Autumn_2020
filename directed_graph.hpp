@@ -15,23 +15,15 @@ using namespace std; // the standard namespace are here just in case.
 template <typename T>
 class vertex {
 	public:
-		int id; // unique identifer for each vertex
-		T weight; // int, double, char, string, ...
+		int src_id; // unique identifer for each vertex
+		int dest_id;
+		T v_weight; // int, double, char, string, ...
+		T e_weight;
 
-		vertex(int v_id, T v_weight) : id(v_id), weight(v_weight) { // constructor
-		}
-};
+		//Constructors
+		vertex(int src_id, T v_weight) : src_id(src_id), v_weight(v_weight){};
 
-
-template <typename T>
-class edge {
-	public:
-		int src_id; //Source vertex
-		int dest_id; //Dest vertex
-		T weight; // Edge weight
-
-		edge(int v_src_id, int v_dest_id, T v_weight) : src_id(v_src_id), dest_id(v_dest_id), weight(v_weight) { // constructor
-		}
+		edge(int src_id, int dest_id, T e_weight) : src_id(src_id), dest_id(dest_id), e_weight(e_weight){}
 };
 
 
@@ -39,8 +31,7 @@ template <typename T>
 class directed_graph {
 
 	private:
-		//vector<vertex<T>> vertice_list; 
-		vector<vertex<T>> adj_list;
+		vector<vertex<T>> adjList;
 
 	public:
 
@@ -82,8 +73,8 @@ class directed_graph {
 
 template <typename T> //Done
 bool directed_graph<T>::contains(const int& v_id) const {
-	for (int i = 0; i < adj_list.size(); i++) { // Loop through each vertex
-		if (adj_list[i].id == v_id) {
+	for (int i = 0; i < adjList.size(); i++) { // Loop through each vertex
+		if (adjList[i].src_id == v_id) {
 			return true;
 			break;
 		}
@@ -99,21 +90,20 @@ bool directed_graph<T>::adjacent(const int& source_id, const int& dest_id) const
 
 template <typename T> //Done
 void directed_graph<T>::add_vertex(const vertex<T>& v) {
-	adj_list.push_back(v);
+	adjList.push_back(v);
 }
 
 template <typename T>
-void directed_graph<T>::add_edge(const int& source_id, const int& dest_id, const T& weight) { //Add an edge
-
-
+void directed_graph<T>::add_edge(const int& src_id, const int& dest_id, const T& weight) { //Add an edge
+	//adj_list.push_back(src_id, dest_id, weight);
 
 }
 
-template <typename T> //Done
+template <typename T> //TODO REMOVE EDGES AS WELL
 void directed_graph<T>::remove_vertex(const int& v_id) {
-		for (int i = 0; i < adj_list.size(); i++) { // Loop through each vertex
-		if (adj_list[i].id == v_id) {
-			adj_list.erase(adj_list.begin() + i); // Delete the vertex associated with provided id
+		for (int i = 0; i < adjList.size(); i++) { // Loop through each vertex
+		if (adjList[i].src_id == v_id) {
+			adjList.erase(adjList.begin() + i); // Delete the vertex associated with provided id
 			break;
 		}
 	}
@@ -131,15 +121,21 @@ size_t directed_graph<T>::out_degree(const int& u_id) const { return 0; }
 template <typename T>
 size_t directed_graph<T>::degree(const int& u_id) const { return 0; }
 
-template <typename T>
-size_t directed_graph<T>::num_vertices() const { return 0; }
+template <typename T> //Done
+size_t directed_graph<T>::num_vertices() const { 
+	int amount = 0;
+	for (int i = 0; i < adjList.size(); i++) { // Loop through each vertex
+		amount += 1;
+		}
+	return amount;
+	} 
 
 template <typename T>
 size_t directed_graph<T>::num_edges() const { return 0; }
 
 template <typename T> //Done
 vector<vertex<T>> directed_graph<T>::get_vertices() { // Return all vertexes. 
-	return adj_list;
+	return adjList;
 }
 
 template <typename T>
