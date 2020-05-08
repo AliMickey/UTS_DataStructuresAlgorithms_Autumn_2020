@@ -10,7 +10,7 @@
 using namespace std; // the standard namespace are here just in case.
 
 /*
-	the vertex class: similar to "Node" for "Linked_List"
+	the vertex class: similar to "Node" for "Linked_List".
 */
 template <typename T>
 class vertex {
