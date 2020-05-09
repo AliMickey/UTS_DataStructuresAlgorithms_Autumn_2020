@@ -11,11 +11,9 @@
 
 using namespace std; 
 
-/*
-	the vertex class: similar to "Node" for "Linked_List".
-*/
+
 template <typename T>
-class vertex {
+class vertex { //Vertex Class
 	public:
 		int id;
 		T weight;
