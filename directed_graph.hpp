@@ -11,7 +11,7 @@
 
 using namespace std; 
 
-
+//Was developed in IDE, use link to track progress: https://github.com/AliMickey/UTS_DataStructuresAlgorithms_2020_Assignment1/commits/master
 template <typename T>
 class vertex { //Vertex Class
 	public:
