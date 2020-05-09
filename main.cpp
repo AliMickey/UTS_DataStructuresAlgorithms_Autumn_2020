@@ -8,7 +8,7 @@ int main() {
 	vertex<double> v1(1, 1.41);
 	vertex<double> v2(2, 2.32);
 	vertex<double> v3(3, 3.66);
-	vertex<double> v4(4, 4.12);
+	vertex<double> v4(4, 4.22);
 
 	g1.add_vertex(v0);
 	g1.add_vertex(v1);
