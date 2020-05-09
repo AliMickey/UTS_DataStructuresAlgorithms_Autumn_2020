@@ -89,7 +89,7 @@ bool directed_graph<T>::adjacent(const int& source_id, const int& dest_id) {
 		}
 		else if (adj_list[dest_id].find(source_id)!=adj_list[dest_id].end()){
 			return true;
-		}
+		} //remove as per ed reply. https://edstem.org/courses/3890/discussion/228726
 	}
 	return false; 
 }
@@ -102,29 +102,41 @@ void directed_graph<T>::add_vertex(const vertex<T>& v) {
 	}
 }
 
-template <typename T>
+template <typename T> //Done
 void directed_graph<T>::add_edge(const int& u_id, const int& v_id, const T& uv_weight) {
-	if(contains(u_id) && contains(v_id)){ // add the edge only if both vertices are in the graph and the edge is not in the graph
-		if(adj_list[u_id].find(v_id)==adj_list[u_id].end()){
-			adj_list[u_id].insert({v_id, uv_weight});
+	if(contains(u_id) && contains(v_id)){
+		if(adj_list[u_id].find(v_id)==adj_list[u_id].end()){ //Find if edge is not in list 
+			adj_list[u_id].insert({v_id, uv_weight}); //Add the edge
 		}
 	}
 }
 
-template <typename T>
-void directed_graph<T>::remove_vertex(const int& u_id) { // remove the vertex, as well as all the incident edges
-	all_vertices.erase(u_id); // step 1: remove from all_vertices
-	adj_list.erase(u_id); // step 2: remove from adj_list
+template <typename T> //Done
+void directed_graph<T>::remove_vertex(const int& u_id) {
+	all_vertices.erase(u_id); //Remove from vertex list
+	adj_list.erase(u_id); //Remove from adjacent list
 	for (auto& x: adj_list){ // x == pair<int, unordered_map<int,T>>
 		x.second.erase(u_id); // x.second == unordered_map<int, T>
 	}
 }
 
-template <typename T>
-void directed_graph<T>::remove_edge(const int& u_id, const int& v_id) {}
+template <typename T> //Done
+void directed_graph<T>::remove_edge(const int& u_id, const int& v_id) {
+	if(adj_list[u_id].find(v_id)!=adj_list[u_id].end()){ //Find if the edge is in the list
+		adj_list[u_id].erase(v_id); //Remove the edge
+	}
+}
 
 template <typename T>
-size_t directed_graph<T>::in_degree(const int& u_id) const { return 0; }
+size_t directed_graph<T>::in_degree(const int& u_id) const { 
+	int amount = 0;
+	if(contains(u_id)) {
+		for (int i = 0; i < adj_list.size(); i++){
+			
+		}
+	}
+	return amount; 
+}
 
 template <typename T>
 size_t directed_graph<T>::out_degree(const int& u_id) const { return 0; }
