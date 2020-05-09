@@ -130,14 +130,21 @@ size_t directed_graph<T>::degree(const int& u_id) const { return 0; }
 template <typename T> //Done
 size_t directed_graph<T>::num_vertices() const { 
 	int amount = 0;
-	for (int i = 0; i < adj_list.size(); i++) { // Loop through each vertex
+	for (int i = 0; i < all_vertices.size(); i++) { // Loop through
 		amount += 1;
 		} 
 	return amount;
-	} 
+}
+	
 
-template <typename T>
-size_t directed_graph<T>::num_edges() const { return 0; }
+template <typename T> //TODO
+size_t directed_graph<T>::num_edges() const { 
+	int amount = 0;
+	for (int i = 0; i < adj_list.size(); i++) { // Loop through
+		amount += 1;
+		} 
+	return amount;
+} 
 
 template <typename T>
 vector<vertex<T>> directed_graph<T>::get_vertices() {

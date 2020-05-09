@@ -19,11 +19,11 @@ int main() {
 	g1.remove_vertex(1);
 
 	vector<vertex<double>> vertex_list = g1.get_vertices();
-	cout << "all vertices: ";
+	cout << "Vertices: (id, weight)" << endl;
 	for (vertex<double> vt : vertex_list) {
 	 	cout << "(" << vt.id << ", " << vt.weight << ") ";
 	}
-	cout << endl;
+	cout << endl << " " << endl;
 
 	g1.add_edge(0, 2, 10);
 	g1.add_edge(0, 3, 20);
@@ -32,11 +32,13 @@ int main() {
 	g1.add_edge(4, 0, 50);
 	g1.add_edge(3, 4, 60);
 
-	cout << "all neighbours of 0: ";
-	vector<vertex<double>> neighbour_list = g1.get_neighbours(0);
+	cout << "All neigbours of 2 (id, weight)" << endl;
+	vector<vertex<double>> neighbour_list = g1.get_neighbours(2);
 	for (vertex<double> nb : neighbour_list) {
 	 	cout << "(" << nb.id << ", " << nb.weight << ") ";
 	}
-	cout << endl;
+	cout << endl << " " << endl;
+
+	cout << "Amount of vertices: " << g1.num_vertices() << ", Number of edges: " << g1.num_edges() << endl;
 
 }

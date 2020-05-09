@@ -1,6 +1,11 @@
 {
-    "files.associations": {
-        "unordered_map": "cpp",
-        "iostream": "cpp"
-    }
+    "git.enableSmartCommit": true,
+    "todohighlight.defaultStyle": {
+        
+    
+    },
+    "todohighlight.keywordsPattern": "Done",
+    "debug.onTaskErrors": "abort",
+    "git.autofetch": true,
+    "C_Cpp.updateChannel": "Insiders"
 }
