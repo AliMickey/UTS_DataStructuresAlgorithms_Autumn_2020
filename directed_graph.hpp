@@ -33,7 +33,7 @@ class directed_graph { //Graph Class
 		~directed_graph(); //A destructor. Depending on how you do things, this may not be necessary.
 
 		bool contains(const int&); //Returns true if the graph contains the given vertex_id, false otherwise.
-		bool adjacent(const int&, const int&) const; //Returns true if the first vertex is adjacent to the second, false otherwise.
+		bool adjacent(const int&, const int&); //Returns true if the first vertex is adjacent to the second, false otherwise.
 
 		void add_vertex(const vertex<T>&); //Adds the passed in vertex to the graph (with no edges).
 		void add_edge(const int&, const int&, const T&); //Adds a weighted edge from the first vertex to the second.
@@ -81,9 +81,16 @@ bool directed_graph<T>::contains(const int& v_id) {
 	return false;
 }
 
-template <typename T>
-bool directed_graph<T>::adjacent(const int& source_id, const int& dest_id) const { 
-	
+template <typename T> //Done
+bool directed_graph<T>::adjacent(const int& source_id, const int& dest_id) { 
+	if(contains(source_id) && contains(dest_id)){
+		if(adj_list[source_id].find(dest_id)!=adj_list[source_id].end()){
+			return true;
+		}
+		else if (adj_list[dest_id].find(source_id)!=adj_list[dest_id].end()){
+			return true;
+		}
+	}
 	return false; 
 }
 
@@ -135,7 +142,7 @@ size_t directed_graph<T>::num_edges() const {
 	for (auto i : adj_list) {
 		//sum += adj_list.size();
 	}
-	return sum;
+	return adj_list.size();
 } 
 
 template <typename T> //Done
@@ -187,13 +194,5 @@ vector<vertex<T>> directed_graph<T>::post_order_traversal(const int& u_id, direc
 
 template <typename T>
 vector<vertex<T>> directed_graph<T>::significance_sorting() { return vector<vertex<T>>(); }
-
-
-
-
-
-
-
-
 
 #endif
