@@ -8,10 +8,8 @@
 #include<set>
 #include<queue>
 #include<stack>
-// include more libraries here if you need to
 
-
-using namespace std; // the standard namespace are here just in case.
+using namespace std; 
 
 /*
 	the vertex class: similar to "Node" for "Linked_List".
@@ -78,9 +76,9 @@ template <typename T>
 directed_graph<T>::~directed_graph() {}
 
 template <typename T> //Done
-bool directed_graph<T>::contains(const int& u_id) {
-	if(all_vertices.find(u_id)!=all_vertices.end()){
-		return true;
+bool directed_graph<T>::contains(const int& v_id) {
+	if(all_vertices.find(v_id)!=all_vertices.end()){
+		return true;	
 	}
 	return false;
 }
