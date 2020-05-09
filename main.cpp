@@ -31,8 +31,9 @@ int main() {
 	g1.add_edge(2, 4, 40);
 	g1.add_edge(4, 0, 50);
 	g1.add_edge(0, 1, 60);
+	g1.add_edge(2, 1, 20);
 
-	g1.remove_edge(2, 4);
+	g1.remove_edge(0, 1);
 
 	cout << "Outgoing neigbours of 2 (id, weight):" << endl;
 	vector<vertex<double>> neighbour_list = g1.get_neighbours(2);
@@ -44,5 +45,7 @@ int main() {
 	cout << "Amount of vertices: " << g1.num_vertices() << ", Number of edges: " << g1.num_edges() << endl;
 
 	cout << "Adjacent - 2 & 3: " << g1.adjacent(1,2) << endl;
+
+	cout << "Incoming Edges to 1: " << g1.in_degree(1) << endl;
 
 }

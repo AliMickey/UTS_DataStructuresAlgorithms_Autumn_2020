@@ -41,7 +41,7 @@ class directed_graph { //Graph Class
 		void remove_vertex(const int&); //Removes the given vertex. Should also clear any incident edges.
 		void remove_edge(const int&, const int&); //Removes the edge between the two vertices, if it exists.
 
-		size_t in_degree(const int&) const; //Returns number of edges coming in to a vertex.
+		size_t in_degree(const int&); //Returns number of edges coming in to a vertex.
 		size_t out_degree(const int&) const; //Returns the number of edges leaving a vertex.
 		size_t degree(const int&) const; //Returns the degree of the vertex (both in edges and out edges).
 
@@ -87,9 +87,6 @@ bool directed_graph<T>::adjacent(const int& source_id, const int& dest_id) {
 		if(adj_list[source_id].find(dest_id)!=adj_list[source_id].end()){
 			return true;
 		}
-		else if (adj_list[dest_id].find(source_id)!=adj_list[dest_id].end()){
-			return true;
-		} //remove as per ed reply. https://edstem.org/courses/3890/discussion/228726
 	}
 	return false; 
 }
@@ -128,11 +125,13 @@ void directed_graph<T>::remove_edge(const int& u_id, const int& v_id) {
 }
 
 template <typename T>
-size_t directed_graph<T>::in_degree(const int& u_id) const { 
+size_t directed_graph<T>::in_degree(const int& u_id) { 
 	int amount = 0;
 	if(contains(u_id)) {
 		for (int i = 0; i < adj_list.size(); i++){
-			
+			if(adj_list[u_id].find(i)!=adj_list[u_id].end()){
+				amount += 1;
+			}	
 		}
 	}
 	return amount; 
