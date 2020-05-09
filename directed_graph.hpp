@@ -158,16 +158,17 @@ size_t directed_graph<T>::degree(const int& u_id) {
 	}
 
 template <typename T> //Done
-size_t directed_graph<T>::num_vertices() const { return all_vertices.size(); }
-	
+size_t directed_graph<T>::num_vertices() const {
+	return all_vertices.size();
+}
 
 template <typename T> //TODO
-size_t directed_graph<T>::num_edges() const { 
-	int sum = 0;
-	for (auto i : adj_list) {
-		//sum += adj_list.size();
+size_t directed_graph<T>::num_edges() const {
+	int amount = 0;
+	for (int i = 0; i < adj_list.size(); i++){ //Loop over each item in adj_list
+		amount += adj_list.bucket_size(i);
 	}
-	return adj_list.size();
+	return adj_list.bucket_size(3);
 } 
 
 template <typename T> //Done

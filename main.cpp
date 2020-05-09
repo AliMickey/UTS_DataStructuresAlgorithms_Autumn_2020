@@ -32,9 +32,9 @@ int main() {
 	g1.add_edge(4, 0, 50);
 	g1.add_edge(0, 1, 60);
 	g1.add_edge(2, 1, 20);
-	g1.add_edge(1, 3, 20);
+	//g1.add_edge(1, 3, 20);
 
-	g1.remove_edge(0, 1);
+	//g1.remove_edge(0, 1);
 
 	cout << "Outgoing neigbours of 2 (id, weight):" << endl;
 	vector<vertex<double>> neighbour_list = g1.get_neighbours(2);
