@@ -22,7 +22,7 @@ class vertex { //Vertex Class
 
 
 template <typename T>
-class directed_graph {
+class directed_graph { //Graph Class
 
 	private:
 		unordered_map<int, T> all_vertices;
