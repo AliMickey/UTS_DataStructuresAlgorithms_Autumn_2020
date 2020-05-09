@@ -126,25 +126,19 @@ template <typename T>
 size_t directed_graph<T>::degree(const int& u_id) const { return 0; }
 
 template <typename T> //Done
-size_t directed_graph<T>::num_vertices() const { 
-	int amount = 0;
-	for (int i = 0; i < all_vertices.size(); i++) { // Loop through
-		amount += 1;
-		} 
-	return amount;
-}
+size_t directed_graph<T>::num_vertices() const { return all_vertices.size(); }
 	
 
 template <typename T> //TODO
 size_t directed_graph<T>::num_edges() const { 
-	int amount = 0;
-	for (int i = 0; i < adj_list.size(); i++) { // Loop through
-		amount += 1;
-		} 
-	return amount;
+	int sum = 0;
+	for (auto i : adj_list) {
+		//sum += adj_list.size();
+	}
+	return sum;
 } 
 
-template <typename T>
+template <typename T> //Done
 vector<vertex<T>> directed_graph<T>::get_vertices() {
 	vector<vertex<T>> v;
 	for(auto x: all_vertices){
@@ -153,7 +147,7 @@ vector<vertex<T>> directed_graph<T>::get_vertices() {
 	return v;
 }
 
-template <typename T>
+template <typename T> //Done
 vector<vertex<T>> directed_graph<T>::get_neighbours(const int& u_id) {
 	vector<vertex<T>> v;
 	if(contains(u_id)){ // first make sure the vertex is in the graph
