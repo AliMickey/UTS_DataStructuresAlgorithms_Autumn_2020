@@ -32,6 +32,7 @@ int main() {
 	g1.add_edge(4, 0, 50);
 	g1.add_edge(0, 1, 60);
 	g1.add_edge(2, 1, 20);
+	g1.add_edge(1, 3, 20);
 
 	g1.remove_edge(0, 1);
 
@@ -46,6 +47,6 @@ int main() {
 
 	cout << "Adjacent - 2 & 3: " << g1.adjacent(1,2) << endl;
 
-	cout << "Incoming Edges to 1: " << g1.in_degree(1) << endl;
+	cout << "Incoming edges to 1: " << g1.in_degree(1) << " and outgoing edges: " << g1.out_degree(1) << " and total edges: " << g1.degree(1) << endl;
 
 }

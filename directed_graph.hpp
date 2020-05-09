@@ -42,8 +42,8 @@ class directed_graph { //Graph Class
 		void remove_edge(const int&, const int&); //Removes the edge between the two vertices, if it exists.
 
 		size_t in_degree(const int&); //Returns number of edges coming in to a vertex.
-		size_t out_degree(const int&) const; //Returns the number of edges leaving a vertex.
-		size_t degree(const int&) const; //Returns the degree of the vertex (both in edges and out edges).
+		size_t out_degree(const int&); //Returns the number of edges leaving a vertex.
+		size_t degree(const int&); //Returns the degree of the vertex (both in edges and out edges).
 
 		size_t num_vertices() const; //Returns the total number of vertices in the graph.
 		size_t num_edges() const; //Returns the total number of edges in the graph.
@@ -67,10 +67,10 @@ class directed_graph { //Graph Class
 
 	};
 
-template <typename T>
+template <typename T> //Done
 directed_graph<T>::directed_graph() {}
 
-template <typename T>
+template <typename T> //TODO
 directed_graph<T>::~directed_graph() {}
 
 template <typename T> //Done
@@ -124,12 +124,12 @@ void directed_graph<T>::remove_edge(const int& u_id, const int& v_id) {
 	}
 }
 
-template <typename T>
+template <typename T> //Done
 size_t directed_graph<T>::in_degree(const int& u_id) { 
-	int amount = 0;
-	if(contains(u_id)) {
-		for (int i = 0; i < adj_list.size(); i++){
-			if(adj_list[u_id].find(i)!=adj_list[u_id].end()){
+	int amount = 0; //Set initial to 0
+	if(contains(u_id)) { //Check if vertex exists
+		for (int i = 0; i < adj_list.size(); i++){ //Loop over each item in adj_list
+			if(adj_list[i].find(u_id)!=adj_list[i].end()){ //If it exists, increment amount by 1.
 				amount += 1;
 			}	
 		}
@@ -137,11 +137,25 @@ size_t directed_graph<T>::in_degree(const int& u_id) {
 	return amount; 
 }
 
-template <typename T>
-size_t directed_graph<T>::out_degree(const int& u_id) const { return 0; }
+template <typename T> //Done
+size_t directed_graph<T>::out_degree(const int& u_id) {
+	int amount = 0; //Set initial to 0
+	if(contains(u_id)) { //Check if vertex exists
+		for (int i = 0; i < adj_list.size(); i++){ //Loop over each item in adj_list
+			if(adj_list[u_id].find(i)!=adj_list[u_id].end()){ //If it exists, increment amount by 1.
+				amount += 1;
+			}	
+		}
+	}
+	return amount;  
+}
 
-template <typename T>
-size_t directed_graph<T>::degree(const int& u_id) const { return 0; }
+template <typename T> //Done
+size_t directed_graph<T>::degree(const int& u_id) { 
+	int amount = 0; //Set initial to 0
+	amount = in_degree(u_id) + out_degree(u_id); //Add in and out edges and return it.
+	return amount;
+	}
 
 template <typename T> //Done
 size_t directed_graph<T>::num_vertices() const { return all_vertices.size(); }
