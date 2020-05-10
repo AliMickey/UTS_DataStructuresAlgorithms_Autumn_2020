@@ -217,18 +217,60 @@ vector<vertex<T>> directed_graph<T>::get_second_order_neighbours(const int& u_id
 	return secondNeighbours;
 }
 
+template <typename T> //TODO
+bool directed_graph<T>::reachable(const int& u_id, const int& v_id) const { 
+	vector<vertex<T>> toDo;
+	vector<vertex<T>> done;
+	vector<vertex<T>> neighbours;
+	if (u_id == v_id){
+		return true;
+	}
+	toDo.push_back(adj_list[u_id]);
+	
+	while (toDo.size() != 0){
+		int i = toDo.back().;
+		done.push_back(toDo.back());
+		toDo.pop_back();
 
-template <typename T>
-bool directed_graph<T>::reachable(const int& u_id, const int& v_id) const { return false; }
 
-template <typename T>
+		for (int i; i < adj_list.size()){ 
+			toDo.push_back(get_neighbours(i));
+		}
+		 
+
+		for (int i = 0; i < firstNeighbours.size(); i++){ 
+			secondNeighbours = get_neighbours(firstNeighbours.at(i));	
+		}
+			}
+	}
+
+
+	
+	
+	return false; 
+}
+
+template <typename T> 
 bool directed_graph<T>::contain_cycles() const { return false; }
 
-template <typename T>
-vector<vertex<T>> directed_graph<T>::depth_first(const int& u_id) { return vector<vertex<T>>(); }
+template <typename T> //TODO
+vector<vertex<T>> directed_graph<T>::depth_first(const int& u_id) { 
+	vector<vertex<T>> secondNeighbours;
+	
+	return secondNeighbours; 
+}
 
 template <typename T>
-vector<vertex<T>> directed_graph<T>::breadth_first(const int& u_id) { return vector<vertex<T>>(); }
+vector<vertex<T>> directed_graph<T>::breadth_first(const int& u_id) { 
+	
+
+
+
+
+
+	return vector<vertex<T>>(); 
+
+}
 
 template <typename T>
 directed_graph<T> directed_graph<T>::out_tree(const int& u_id) { return directed_graph<vertex<T>>(); }
