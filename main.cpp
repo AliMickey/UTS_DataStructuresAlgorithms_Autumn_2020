@@ -15,15 +15,7 @@ int main() {
 	g1.add_vertex(v2);
 	g1.add_vertex(v3);
 	g1.add_vertex(v4);
-
 	//g1.remove_vertex(1);
-
-	vector<vertex<double>> vertex_list = g1.get_vertices();
-	cout << "Vertices: (id, weight):" << endl;
-	for (vertex<double> vt : vertex_list) {
-	 	cout << "(" << vt.id << ", " << vt.weight << ") ";
-	}
-	cout << endl << " " << endl;
 
 	g1.add_edge(0, 1, 6); //A-B
 	g1.add_edge(0, 2, 9); //A-C 
@@ -32,11 +24,19 @@ int main() {
 	g1.add_edge(3, 0, 1); //D-A
 	g1.add_edge(3, 4, 5); //D-E
 	g1.add_edge(1, 4, 3); //B-E
-
 	//g1.remove_edge(0, 1);
 
-	cout << "Outgoing neigbours of 2 (id, weight):" << endl;
-	vector<vertex<double>> neighbour_list = g1.get_neighbours(2);
+
+	//Tests
+	vector<vertex<double>> vertex_list = g1.get_vertices();
+	cout << "Vertices: (id, weight):" << endl;
+	for (vertex<double> vt : vertex_list) {
+	 	cout << "(" << vt.id << ", " << vt.weight << ") ";
+	}
+	cout << endl << " " << endl;
+
+	cout << "Outgoing neigbours of 3 (id, weight):" << endl;
+	vector<vertex<double>> neighbour_list = g1.get_neighbours(3);
 	for (vertex<double> nb : neighbour_list) {
 	 	cout << "(" << nb.id << ", " << nb.weight << ") ";
 	}

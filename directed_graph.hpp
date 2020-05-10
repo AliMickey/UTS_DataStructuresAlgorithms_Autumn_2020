@@ -46,7 +46,7 @@ class directed_graph { //Graph Class
 		size_t degree(const int&); //Returns the degree of the vertex (both in edges and out edges).
 
 		size_t num_vertices() const; //Returns the total number of vertices in the graph.
-		size_t num_edges() const; //Returns the total number of edges in the graph.
+		size_t num_edges(); //Returns the total number of edges in the graph.
 
 		vector<vertex<T>> get_vertices(); //Returns a vector containing all the vertices.
 		vector<vertex<T>> get_neighbours(const int&); //Returns a vector containing all the vertices reachable from the given vertex. The vertex is not considered a neighbour of itself.
@@ -68,10 +68,14 @@ class directed_graph { //Graph Class
 	};
 
 template <typename T> //Done
-directed_graph<T>::directed_graph() {}
+directed_graph<T>::directed_graph() { 
+	//Constructor
+} 
 
-template <typename T> //TODO
-directed_graph<T>::~directed_graph() {}
+template <typename T> //Check if needed
+directed_graph<T>::~directed_graph() { 
+	//Destructor
+} 
 
 template <typename T> //Done
 bool directed_graph<T>::contains(const int& v_id) {
@@ -83,8 +87,8 @@ bool directed_graph<T>::contains(const int& v_id) {
 
 template <typename T> //Done
 bool directed_graph<T>::adjacent(const int& source_id, const int& dest_id) { 
-	if(contains(source_id) && contains(dest_id)){
-		if(adj_list[source_id].find(dest_id)!=adj_list[source_id].end()){
+	if(contains(source_id) && contains(dest_id)){ //Check if verticies exist
+		if(adj_list[source_id].find(dest_id)!=adj_list[source_id].end()){ 
 			return true;
 		}
 	}
@@ -94,15 +98,15 @@ bool directed_graph<T>::adjacent(const int& source_id, const int& dest_id) {
 template <typename T> //Done
 void directed_graph<T>::add_vertex(const vertex<T>& v) {
 	if(!contains(v.id)){
-		all_vertices.insert({v.id, v.weight}); // step 1: add to all_vertices
-		adj_list[v.id]=unordered_map<int, T>(); // step 2: add to adj_list
+		all_vertices.insert({v.id, v.weight}); // Add to all_verticies
+		adj_list[v.id]=unordered_map<int, T>(); // Add to adj_list
 	}
 }
 
 template <typename T> //Done
 void directed_graph<T>::add_edge(const int& u_id, const int& v_id, const T& uv_weight) {
-	if(contains(u_id) && contains(v_id)){
-		if(adj_list[u_id].find(v_id)==adj_list[u_id].end()){ //Find if edge is not in list 
+	if(contains(u_id) && contains(v_id)){ //Check if vertices exist
+		if(adj_list[u_id].find(v_id)==adj_list[u_id].end()){ //Check if edge is not in list 
 			adj_list[u_id].insert({v_id, uv_weight}); //Add the edge
 		}
 	}
@@ -112,8 +116,8 @@ template <typename T> //Done
 void directed_graph<T>::remove_vertex(const int& u_id) {
 	all_vertices.erase(u_id); //Remove from vertex list
 	adj_list.erase(u_id); //Remove from adjacent list
-	for (auto& x: adj_list){ // x == pair<int, unordered_map<int,T>>
-		x.second.erase(u_id); // x.second == unordered_map<int, T>
+	for (auto& x: adj_list){ //For each pair
+		x.second.erase(u_id); //Remove the second part
 	}
 }
 
@@ -159,17 +163,19 @@ size_t directed_graph<T>::degree(const int& u_id) {
 
 template <typename T> //Done
 size_t directed_graph<T>::num_vertices() const {
-	return all_vertices.size();
+	return all_vertices.size(); //Return size of list
 }
 
-template <typename T> //TODO
-size_t directed_graph<T>::num_edges() const {
-	int amount = 0;
-	for (int i = 0; i < adj_list.size(); i++){ //Loop over each item in adj_list
-		amount += adj_list.bucket_size(i);
+template <typename T> //Done
+size_t directed_graph<T>::num_edges() {
+	int amount = 0; //Set initial to 0
+	for (int i = 0; i < adj_list.size(); i++){ //Loop over number of adj_list items
+		for (auto x:adj_list[i]){ // For each edge in adj_list[v_id]
+			amount += 1; //Increment by 1
+		}
 	}
-	return adj_list.size();
-} 
+	return amount;
+}
 
 template <typename T> //Done
 vector<vertex<T>> directed_graph<T>::get_vertices() {
