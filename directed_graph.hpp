@@ -206,16 +206,15 @@ vector<vertex<T>> directed_graph<T>::get_second_order_neighbours(const int& u_id
 			firstNeighbours.push_back(x.first);
 		}
 		for (int i = 0; i < firstNeighbours.size(); i++){ //For each neighbour, get its neighbours 
-			secondNeighbours = get_neighbours(firstNeighbours.at(i));
-			
+			secondNeighbours = get_neighbours(firstNeighbours.at(i));	
 		}
 		for (int i = 0; i < secondNeighbours.size(); i++){ //For each second neighbour, remove if any contain original u_id
 			if (secondNeighbours.at(i).id == u_id){
 				secondNeighbours.erase(secondNeighbours.begin()+i);
 			}
 		}
-	return secondNeighbours;
 	}
+	return secondNeighbours;
 }
 
 
