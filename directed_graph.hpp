@@ -168,7 +168,7 @@ size_t directed_graph<T>::num_edges() const {
 	for (int i = 0; i < adj_list.size(); i++){ //Loop over each item in adj_list
 		amount += adj_list.bucket_size(i);
 	}
-	return adj_list.bucket_size(3);
+	return adj_list.size();
 } 
 
 template <typename T> //Done
