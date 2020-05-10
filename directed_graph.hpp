@@ -50,9 +50,9 @@ class directed_graph { //Graph Class
 
 		vector<vertex<T>> get_vertices(); //Returns a vector containing all the vertices.
 		vector<vertex<T>> get_neighbours(const int&); //Returns a vector containing all the vertices reachable from the given vertex. The vertex is not considered a neighbour of itself.
-		vector<vertex<T>> get_second_order_neighbors(const int&); // Returns a vector containing all the second_order_neighbours (i.e., neighbours of neighbours) of the given vertex. A vector cannot be considered a second_order_neighbor of itself.
+		vector<vertex<T>> get_second_order_neighbours(const int&); // Returns a vector containing all the second_order_neighbours (i.e., neighbours of neighbours) of the given vertex. A vector cannot be considered a second_order_neighbor of itself.
 		bool reachable(const int&, const int&) const; //Returns true if the second vertex is reachable from the first (can you follow a path of out-edges to get from the first to the second?). Returns false otherwise.
-		bool contian_cycles() const; // Return true if the graph contains cycles (there is a path from any vertices directly/indirectly to itself), false otherwise.
+		bool contain_cycles() const; // Return true if the graph contains cycles (there is a path from any vertices directly/indirectly to itself), false otherwise.
 
 		vector<vertex<T>> depth_first(const int&); //Returns the vertices of the graph in the order they are visited in by a depth-first traversal starting at the given vertex.
 		vector<vertex<T>> breadth_first(const int&); //Returns the vertices of the graph in the order they are visisted in by a breadth-first traversal starting at the given vertex.
@@ -192,13 +192,13 @@ vector<vertex<T>> directed_graph<T>::get_neighbours(const int& u_id) {
 }
 
 template <typename T>
-vector<vertex<T>> directed_graph<T>::get_second_order_neighbors(const int& u_id) { return vector<vertex<T>>(); }
+vector<vertex<T>> directed_graph<T>::get_second_order_neighbours(const int& u_id) { return vector<vertex<T>>(); }
 
 template <typename T>
 bool directed_graph<T>::reachable(const int& u_id, const int& v_id) const { return false; }
 
 template <typename T>
-bool directed_graph<T>::contian_cycles() const { return false; }
+bool directed_graph<T>::contain_cycles() const { return false; }
 
 template <typename T>
 vector<vertex<T>> directed_graph<T>::depth_first(const int& u_id) { return vector<vertex<T>>(); }
