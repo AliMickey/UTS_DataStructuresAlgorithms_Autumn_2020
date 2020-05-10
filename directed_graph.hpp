@@ -189,7 +189,7 @@ vector<vertex<T>> directed_graph<T>::get_vertices() {
 template <typename T> //Done
 vector<vertex<T>> directed_graph<T>::get_neighbours(const int& u_id) {
 	vector<vertex<T>> v;
-	if(contains(u_id)){ // first make sure the vertex is in the graph
+	if(contains(u_id)){ //Check if vertex exists
 		for (auto x: adj_list[u_id]){ // adj_list[u_id] is an unordered_map<int, T>
 			v.push_back(vertex<T>(x.first, all_vertices[x.first]));
 		}
@@ -197,8 +197,27 @@ vector<vertex<T>> directed_graph<T>::get_neighbours(const int& u_id) {
 	return v;
 }
 
-template <typename T>
-vector<vertex<T>> directed_graph<T>::get_second_order_neighbours(const int& u_id) { return vector<vertex<T>>(); }
+template <typename T> //Done
+vector<vertex<T>> directed_graph<T>::get_second_order_neighbours(const int& u_id) { 
+	vector<int> firstNeighbours;
+	vector<vertex<T>> secondNeighbours;
+	if(contains(u_id)){ //Check if vertex exists
+		for (auto x: adj_list[u_id]){ //Get first neighbour IDs
+			firstNeighbours.push_back(x.first);
+		}
+		for (int i = 0; i < firstNeighbours.size(); i++){ //For each neighbour, get its neighbours 
+			secondNeighbours = get_neighbours(firstNeighbours.at(i));
+			
+		}
+		for (int i = 0; i < secondNeighbours.size(); i++){ //For each second neighbour, remove if any contain original u_id
+			if (secondNeighbours.at(i).id == u_id){
+				secondNeighbours.erase(secondNeighbours.begin()+i);
+			}
+		}
+	return secondNeighbours;
+	}
+}
+
 
 template <typename T>
 bool directed_graph<T>::reachable(const int& u_id, const int& v_id) const { return false; }

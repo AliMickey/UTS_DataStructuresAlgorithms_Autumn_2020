@@ -4,26 +4,27 @@ int main() {
 
 	directed_graph<double> g1;
 
-	vertex<double> v0(0, 800); //A
-	vertex<double> v1(1, 3000); //B
-	vertex<double> v2(2, 400); //C
-	vertex<double> v3(3, 710); //D
-	vertex<double> v4(4, 221); //E
+	vertex<double> v1(1, 800); //A
+	vertex<double> v2(2, 3000); //B
+	vertex<double> v3(3, 400); //C
+	vertex<double> v4(4, 710); //D
+	vertex<double> v5(5, 221); //E
 
-	g1.add_vertex(v0);
 	g1.add_vertex(v1);
 	g1.add_vertex(v2);
 	g1.add_vertex(v3);
 	g1.add_vertex(v4);
+	g1.add_vertex(v5);
 	//g1.remove_vertex(1);
 
-	g1.add_edge(0, 1, 6); //A-B
-	g1.add_edge(0, 2, 9); //A-C 
-	g1.add_edge(2, 3, 4); //C-D
-	g1.add_edge(3, 2, 7); //D-C
-	g1.add_edge(3, 0, 1); //D-A
-	g1.add_edge(3, 4, 5); //D-E
-	g1.add_edge(1, 4, 3); //B-E
+	g1.add_edge(1, 2, 6); //A-B
+	g1.add_edge(1, 3, 9); //A-C 
+	g1.add_edge(3, 4, 4); //C-D
+	g1.add_edge(4, 3, 7); //D-C
+	g1.add_edge(4, 1, 1); //D-A
+	g1.add_edge(4, 5, 5); //D-E
+	g1.add_edge(2, 5, 3); //B-E
+	g1.add_edge(1, 4, 3); //A-D
 	//g1.remove_edge(0, 1);
 
 
@@ -35,11 +36,21 @@ int main() {
 	}
 	cout << endl << " " << endl;
 
-	cout << "Outgoing neigbours of 3 (id, weight):" << endl;
+	cout << "Outgoing neighbours of 3 (id, weight):" << endl;
 	vector<vertex<double>> neighbour_list = g1.get_neighbours(3);
 	for (vertex<double> nb : neighbour_list) {
 	 	cout << "(" << nb.id << ", " << nb.weight << ") ";
 	}
+
+	cout << endl << " " << endl;
+
+	cout << "Second order neighbours of 4 (id, weight):" << endl;
+	vector<vertex<double>> secondOrderNeighbour_list = g1.get_second_order_neighbours(4);
+	for (vertex<double> snb : secondOrderNeighbour_list) {
+	 	cout << "(" << snb.id << ", " << snb.weight << ") ";
+	}
+
+	
 	cout << endl << " " << endl;
 
 	cout << "Amount of vertices: " << g1.num_vertices() << ", Number of edges: " << g1.num_edges() << endl;
