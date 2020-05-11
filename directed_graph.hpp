@@ -198,7 +198,7 @@ vector<vertex<T>> directed_graph<T>::get_neighbours(const int& u_id) {
 }
 
 template <typename T> //Done
-vector<vertex<T>> directed_graph<T>::get_second_order_neighbours(const int& u_id) { 
+vector<vertex<T>> directed_graph<T>::get_second_order_neighbours(const int& u_id) {
 	vector<int> firstNeighboursID;
 	vector<int> doneList;
 	vector<vertex<T>> tempSecondNeighbours;
@@ -211,10 +211,10 @@ vector<vertex<T>> directed_graph<T>::get_second_order_neighbours(const int& u_id
 		for (int i = 0; i < firstNeighboursID.size(); i++){ //For each neighbour
 			tempSecondNeighbours = get_neighbours(firstNeighboursID.at(i)); //Get its neighbours and add to temp
 			for (int j = 0; j < tempSecondNeighbours.size(); j++){ //For each second neighbour
-				doneList.push_back(tempSecondNeighbours[j].id); //Add ID to done list
-				if((find(doneList.begin(), doneList.end(), tempSecondNeighbours[j].id) != doneList.end()) && tempSecondNeighbours.at(j).id != u_id ){ //If ID is NOT in done list.
+				if(!(find(doneList.begin(), doneList.end(), tempSecondNeighbours[j].id) != doneList.end()) && tempSecondNeighbours.at(j).id != u_id ){ //If ID is NOT in done list.
 					secondNeighbours.push_back(tempSecondNeighbours[j]); //Add neighbour
 				}
+				doneList.push_back(tempSecondNeighbours[j].id); //Add ID to done list
 			}
 		}
 	}
