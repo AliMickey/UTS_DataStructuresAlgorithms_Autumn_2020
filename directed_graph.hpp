@@ -8,6 +8,7 @@
 #include<set>
 #include<queue>
 #include<stack>
+#include <algorithm>
 
 using namespace std; 
 
@@ -199,18 +200,22 @@ vector<vertex<T>> directed_graph<T>::get_neighbours(const int& u_id) {
 
 template <typename T> //Done
 vector<vertex<T>> directed_graph<T>::get_second_order_neighbours(const int& u_id) { 
-	vector<int> firstNeighbours;
+	vector<int> firstNeighboursID;
+	vector<int> doneList;
+	vector<vertex<T>> tempSecondNeighbours;
 	vector<vertex<T>> secondNeighbours;
+
 	if(contains(u_id)){ //Check if vertex exists
 		for (auto x: adj_list[u_id]){ //Get first neighbour IDs
-			firstNeighbours.push_back(x.first);
+			firstNeighboursID.push_back(x.first);
 		}
-		for (int i = 0; i < firstNeighbours.size(); i++){ //For each neighbour, get its neighbours 
-			secondNeighbours = get_neighbours(firstNeighbours.at(i));	
-		}
-		for (int i = 0; i < secondNeighbours.size(); i++){ //For each second neighbour, remove if any contain original u_id
-			if (secondNeighbours.at(i).id == u_id){
-				secondNeighbours.erase(secondNeighbours.begin()+i);
+		for (int i = 0; i < firstNeighboursID.size(); i++){ //For each neighbour
+			tempSecondNeighbours = get_neighbours(firstNeighboursID.at(i)); //Get its neighbours and add to temp
+			for (int j = 0; j < tempSecondNeighbours.size(); j++){ //For each second neighbour
+				doneList.push_back(tempSecondNeighbours[j].id); //Add ID to done list
+				if((find(doneList.begin(), doneList.end(), tempSecondNeighbours[j].id) != doneList.end()) && tempSecondNeighbours.at(j).id != u_id ){ //If ID is NOT in done list.
+					secondNeighbours.push_back(tempSecondNeighbours[j]); //Add neighbour
+				}
 			}
 		}
 	}
@@ -225,28 +230,25 @@ bool directed_graph<T>::reachable(const int& u_id, const int& v_id) const {
 	if (u_id == v_id){
 		return true;
 	}
-	toDo.push_back(adj_list[u_id]);
+
+	toDo.push_back(adj_list[u_id]); //Add first node to toDo
 	
-	while (toDo.size() != 0){
-		int i = toDo.back().;
-		done.push_back(toDo.back());
+	while (toDo.size() != 0){ //While toDo is not empty
+		done.push_back(toDo.back()); //
 		toDo.pop_back();
+	//if (tempSecondNeighbours.at(i).id != u_id){}
 
-
-		for (int i; i < adj_list.size()){ 
-			toDo.push_back(get_neighbours(i));
-		}
+	//	for (int i; i < adj_list.size()) { 
+		//	toDo.push_back(get_neighbours(i));
+		//}
 		 
 
-		for (int i = 0; i < firstNeighbours.size(); i++){ 
-			secondNeighbours = get_neighbours(firstNeighbours.at(i));	
-		}
-			}
+		//for (int i = 0; i < firstNeighbours.size(); i++){ 
+			//secondNeighbours = get_neighbours(firstNeighbours.at(i));	
+		//}
+			//}
 	}
 
-
-	
-	
 	return false; 
 }
 
@@ -255,7 +257,7 @@ bool directed_graph<T>::contain_cycles() const { return false; }
 
 template <typename T> //TODO
 vector<vertex<T>> directed_graph<T>::depth_first(const int& u_id) { 
-	vector<vertex<T>> secondNeighbours;
+
 	
 	return secondNeighbours; 
 }

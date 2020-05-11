@@ -24,7 +24,6 @@ int main() {
 	g1.add_edge(4, 1, 1); //D-A
 	g1.add_edge(4, 5, 5); //D-E
 	g1.add_edge(2, 5, 3); //B-E
-	g1.add_edge(1, 4, 3); //A-D
 	//g1.remove_edge(0, 1);
 
 
@@ -36,8 +35,8 @@ int main() {
 	}
 	cout << endl << " " << endl;
 
-	cout << "Outgoing neighbours of 3 (id, weight):" << endl;
-	vector<vertex<double>> neighbour_list = g1.get_neighbours(3);
+	cout << "Outgoing neighbours of 4 (id, weight):" << endl;
+	vector<vertex<double>> neighbour_list = g1.get_neighbours(4);
 	for (vertex<double> nb : neighbour_list) {
 	 	cout << "(" << nb.id << ", " << nb.weight << ") ";
 	}
@@ -64,8 +63,8 @@ int main() {
 
 	cout << "Amount of vertices: " << g1.num_vertices() << ", Number of edges: " << g1.num_edges() << endl;
 
-	cout << "Adjacent - 2 & 3: " << g1.adjacent(2,3) << endl;
+	cout << "Adjacent - 2 & 5: " << g1.adjacent(2,5) << endl;
 
-	cout << "Incoming edges to 3: " << g1.in_degree(3) << " and outgoing edges: " << g1.out_degree(3) << " and total edges: " << g1.degree(3) << endl;
+	cout << "Incoming edges to 3: " << g1.in_degree(4) << " and outgoing edges: " << g1.out_degree(4) << " and total edges: " << g1.degree(4) << endl;
 
 }
