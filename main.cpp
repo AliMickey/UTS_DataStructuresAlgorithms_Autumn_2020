@@ -55,10 +55,10 @@ int main() {
 	//g1.reachable(1, 5);
 
 	cout << "DFS from 1: " << endl;
-	vector<vertex<double>> dfs_list = g1.depth_first(1);
-	for (vertex<double> snb : dfs_list) {
-	 	cout << "(" << snb.id << ", " << snb.weight << ") ";
-	}
+	//vector<vertex<double>> dfs_list = g1.depth_first(1);
+	//for (vertex<double> snb : dfs_list) {
+	 	//cout << "(" << snb.id << ", " << snb.weight << ") ";
+	//}
 
 
 	cout << "Amount of vertices: " << g1.num_vertices() << ", Number of edges: " << g1.num_edges() << endl;

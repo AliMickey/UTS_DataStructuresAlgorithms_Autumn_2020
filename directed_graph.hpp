@@ -259,7 +259,7 @@ template <typename T> //TODO
 vector<vertex<T>> directed_graph<T>::depth_first(const int& u_id) { 
 
 	
-	return secondNeighbours; 
+	return directed_graph<vertex<T>>(); 
 }
 
 template <typename T>
