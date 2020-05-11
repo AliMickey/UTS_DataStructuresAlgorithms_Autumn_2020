@@ -147,7 +147,7 @@ size_t directed_graph<T>::out_degree(const int& u_id) {
 	int amount = 0; //Set initial to 0
 	if(contains(u_id)) { //Check if vertex exists
 		for (int i = 0; i < adj_list.size(); i++){ //Loop over each item in adj_list
-			if(adj_list[u_id].find(i)!=adj_list[u_id].end()){ //If it exists, increment amount by 1.
+			if(adj_list[u_id].find(i)!=adj_list[i].end()){ //If it exists, increment amount by 1.
 				amount += 1;
 			}	
 		}
@@ -157,9 +157,8 @@ size_t directed_graph<T>::out_degree(const int& u_id) {
 
 template <typename T> //Done
 size_t directed_graph<T>::degree(const int& u_id) { 
-	int amount = 0; //Set initial to 0
-	amount = in_degree(u_id) + out_degree(u_id); //Add in and out edges and return it.
-	return amount;
+	
+	return in_degree(u_id) + out_degree(u_id); //Add in and out edges and return it.
 	}
 
 template <typename T> //Done
