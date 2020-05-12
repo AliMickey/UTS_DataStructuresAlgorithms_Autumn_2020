@@ -222,13 +222,9 @@ vector<vertex<T>> directed_graph<T>::get_second_order_neighbours(const int& u_id
 
 template <typename T> //Done
 bool directed_graph<T>::reachable(const int& u_id, const int& v_id) { 
-	//https://stackoverflow.com/a/354366
 	vector<int> toDoList;
 	vector<int> doneList;
-	vector<vertex<T>> neighbours;
-	//if (u_id == v_id){
-		//return true;
-//	}
+	vector<vertex<T>> neighbours;ov
 	toDoList.push_back(u_id); //Add first ID to toDo
 	while (toDoList.size() != 0) { //While toDo is not empty
 		doneList.push_back(toDoList.back()); //Add ID to done list
