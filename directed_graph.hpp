@@ -52,8 +52,8 @@ class directed_graph { //Graph Class
 		vector<vertex<T>> get_vertices(); //Returns a vector containing all the vertices.
 		vector<vertex<T>> get_neighbours(const int&); //Returns a vector containing all the vertices reachable from the given vertex. The vertex is not considered a neighbour of itself.
 		vector<vertex<T>> get_second_order_neighbours(const int&); // Returns a vector containing all the second_order_neighbours (i.e., neighbours of neighbours) of the given vertex. A vector cannot be considered a second_order_neighbor of itself.
-		bool reachable(const int&, const int&) const; //Returns true if the second vertex is reachable from the first (can you follow a path of out-edges to get from the first to the second?). Returns false otherwise.
-		bool contain_cycles() const; // Return true if the graph contains cycles (there is a path from any vertices directly/indirectly to itself), false otherwise.
+		bool reachable(const int&, const int&); //Returns true if the second vertex is reachable from the first (can you follow a path of out-edges to get from the first to the second?). Returns false otherwise.
+		bool contain_cycles(); // Return true if the graph contains cycles (there is a path from any vertices directly/indirectly to itself), false otherwise.
 
 		vector<vertex<T>> depth_first(const int&); //Returns the vertices of the graph in the order they are visited in by a depth-first traversal starting at the given vertex.
 		vector<vertex<T>> breadth_first(const int&); //Returns the vertices of the graph in the order they are visisted in by a breadth-first traversal starting at the given vertex.
@@ -203,7 +203,6 @@ vector<vertex<T>> directed_graph<T>::get_second_order_neighbours(const int& u_id
 	vector<int> doneList;
 	vector<vertex<T>> tempSecondNeighbours;
 	vector<vertex<T>> secondNeighbours;
-
 	if(contains(u_id)){ //Check if vertex exists
 		for (auto x: adj_list[u_id]){ //Get first neighbour IDs
 			firstNeighboursID.push_back(x.first);
@@ -211,7 +210,7 @@ vector<vertex<T>> directed_graph<T>::get_second_order_neighbours(const int& u_id
 		for (int i = 0; i < firstNeighboursID.size(); i++){ //For each neighbour
 			tempSecondNeighbours = get_neighbours(firstNeighboursID.at(i)); //Get its neighbours and add to temp
 			for (int j = 0; j < tempSecondNeighbours.size(); j++){ //For each second neighbour
-				if(!(find(doneList.begin(), doneList.end(), tempSecondNeighbours[j].id) != doneList.end()) && tempSecondNeighbours.at(j).id != u_id ){ //If ID is NOT in done list.
+				if(!(find(doneList.begin(), doneList.end(), tempSecondNeighbours[j].id) != doneList.end()) && tempSecondNeighbours.at(j).id != u_id ){ //If ID is NOT in done list AND ID is not source vertex
 					secondNeighbours.push_back(tempSecondNeighbours[j]); //Add neighbour
 				}
 				doneList.push_back(tempSecondNeighbours[j].id); //Add ID to done list
@@ -222,39 +221,43 @@ vector<vertex<T>> directed_graph<T>::get_second_order_neighbours(const int& u_id
 }
 
 template <typename T> //TODO
-bool directed_graph<T>::reachable(const int& u_id, const int& v_id) const { 
-	vector<vertex<T>> toDo;
-	vector<vertex<T>> done;
+bool directed_graph<T>::reachable(const int& u_id, const int& v_id) { 
+	vector<int> toDoList;
+	vector<int> doneList;
 	vector<vertex<T>> neighbours;
 	if (u_id == v_id){
 		return true;
 	}
 
-	toDo.push_back(adj_list[u_id]); //Add first node to toDo
+	toDoList.push_back(u_id); //Add first ID to toDo
 	
-	while (toDo.size() != 0){ //While toDo is not empty
-		done.push_back(toDo.back()); //
-		toDo.pop_back();
-	//if (tempSecondNeighbours.at(i).id != u_id){}
+	while (toDoList.size() != 0){ //While toDo is not empty
+		doneList.push_back(toDoList.back()); //Add ID to done list
+		neighbours = get_neighbours(toDoList.back()); //Get neighbours for ID
+		toDoList.pop_back(); //Remove ID from toDo
+		
+		for (int i = 0; i < neighbours.size(); i++){
+			if (neighbours.at(i).id == v_id){
+				return true;
+			}
 
-	//	for (int i; i < adj_list.size()) { 
-		//	toDo.push_back(get_neighbours(i));
-		//}
-		 
-
-		//for (int i = 0; i < firstNeighbours.size(); i++){ 
-			//secondNeighbours = get_neighbours(firstNeighbours.at(i));	
-		//}
-			//}
+			if (!(find(doneList.begin(), doneList.end(), neighbours[i].id) != doneList.end())) { //If ID is not in done list
+				doneList.push_back(neighbours[i].id); //Add it to done list
+			} 
+		}
 	}
 
 	return false; 
 }
 
-template <typename T> 
-bool directed_graph<T>::contain_cycles() const { return false; }
+template <typename T> //TODO Complete reachable first
+bool directed_graph<T>::contain_cycles() {
+	
+	//Call reachable with source_id and source_id until return true
+	return false; 
+}
 
-template <typename T> //TODO
+template <typename T> 
 vector<vertex<T>> directed_graph<T>::depth_first(const int& u_id) { 
 
 	

@@ -51,8 +51,8 @@ int main() {
 
 	cout << endl << " " << endl;
 
-	cout << "Is 5 reachable from 1: " << endl;
-	//g1.reachable(1, 5);
+	cout << "Is 5 reachable from 1: " << g1.reachable(1, 5) << endl;
+	
 
 	cout << "DFS from 1: " << endl;
 	//vector<vertex<double>> dfs_list = g1.depth_first(1);
