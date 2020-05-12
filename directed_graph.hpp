@@ -243,7 +243,7 @@ bool directed_graph<T>::reachable(const int& u_id, const int& v_id) {
 	return false; 
 }
 
-template <typename T> //TODO
+template <typename T> //Done
 bool directed_graph<T>::contain_cycles() {
 	//Call reachable with source_id and source_id until return true
 	for (int i = 0; i < adj_list.size(); i++){
@@ -263,14 +263,27 @@ vector<vertex<T>> directed_graph<T>::depth_first(const int& u_id) {
 
 template <typename T>
 vector<vertex<T>> directed_graph<T>::breadth_first(const int& u_id) { 
-	
-
-
-
-
-
-	return vector<vertex<T>>(); 
-
+	vector<int> toDoList;
+	vector<int> doneList;
+	vector<vertex<T>> neighbours;
+	vector<vertex<T>> vertices;
+	toDoList.push_back(u_id); //Add first ID to toDo
+	while (toDoList.size() != 0) { //While toDo is not empty
+		doneList.push_back(toDoList.back()); //Add ID to done list
+		neighbours = get_neighbours(toDoList.back()); //Get neighbours for ID
+		toDoList.pop_back(); //Remove ID from toDo
+		for (int i = 0; i < neighbours.size(); i++) { //For each neighbour
+			vertices.push_back(neighbours[i]);
+			if (vertices.size() + 1  == num_vertices()){
+				toDoList.clear();
+			}
+			else if (!(find(doneList.begin(), doneList.end(), neighbours[i].id) != doneList.end())) { //If ID is not in done list
+				toDoList.push_back(neighbours[i].id); //Add it to do list
+			} 
+		}
+		neighbours.clear(); //Delete all neighbours 
+	}
+	return vertices; 
 }
 
 template <typename T>

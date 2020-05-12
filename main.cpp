@@ -17,14 +17,20 @@ int main() {
 	g1.add_vertex(v5);
 	//g1.remove_vertex(1);
 
-	g1.add_edge(1, 2, 6); //A-B
-	g1.add_edge(1, 3, 9); //A-C 
-	g1.add_edge(3, 4, 4); //C-D
-	g1.add_edge(4, 3, 7); //D-C
-	g1.add_edge(4, 1, 1); //D-A
-	g1.add_edge(4, 5, 5); //D-E
-	g1.add_edge(2, 5, 3); //B-E
+	// g1.add_edge(1, 2, 6); //A-B
+	// g1.add_edge(1, 3, 9); //A-C 
+	// g1.add_edge(3, 4, 4); //C-D
+	// g1.add_edge(4, 3, 7); //D-C
+	// g1.add_edge(4, 1, 1); //D-A
+	// g1.add_edge(4, 5, 5); //D-E
+	// g1.add_edge(2, 5, 3); //B-E
 	//g1.remove_edge(0, 1);
+
+	g1.add_edge(1, 2, 50); //C-D
+	g1.add_edge(1, 3, 51); //D-C
+	g1.add_edge(2, 4, 52); //D-A
+	g1.add_edge(2, 5, 53); //D-E
+	g1.add_edge(5, 1, 54);
 
 	//Tests
 	vector<vertex<double>> vertex_list = g1.get_vertices();
@@ -50,11 +56,11 @@ int main() {
 
 	cout << endl << " " << endl;
 
-	cout << "DFS from 1: " << endl;
-	//vector<vertex<double>> dfs_list = g1.depth_first(1);
-	//for (vertex<double> snb : dfs_list) {
-	 	//cout << "(" << snb.id << ", " << snb.weight << ") ";
-	//}
+	cout << "BFS from 1: " << endl;
+	vector<vertex<double>> bfs_list = g1.breadth_first(1);
+	for (vertex<double> x : bfs_list) {
+	 	cout << "(" << x.id << ", " << x.weight << ") ";
+	}
 
 	cout << endl << " " << endl;
 
