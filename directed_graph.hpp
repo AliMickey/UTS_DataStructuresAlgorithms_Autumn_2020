@@ -220,7 +220,7 @@ vector<vertex<T>> directed_graph<T>::get_second_order_neighbours(const int& u_id
 	return secondNeighbours;
 }
 
-template <typename T> //TODO
+template <typename T> //Done
 bool directed_graph<T>::reachable(const int& u_id, const int& v_id) { 
 	vector<int> toDoList;
 	vector<int> doneList;
@@ -235,18 +235,16 @@ bool directed_graph<T>::reachable(const int& u_id, const int& v_id) {
 		doneList.push_back(toDoList.back()); //Add ID to done list
 		neighbours = get_neighbours(toDoList.back()); //Get neighbours for ID
 		toDoList.pop_back(); //Remove ID from toDo
-		
 		for (int i = 0; i < neighbours.size(); i++){
 			if (neighbours.at(i).id == v_id){
 				return true;
 			}
-
 			if (!(find(doneList.begin(), doneList.end(), neighbours[i].id) != doneList.end())) { //If ID is not in done list
-				doneList.push_back(neighbours[i].id); //Add it to done list
+				toDoList.push_back(neighbours[i].id); //Add it to do list
 			} 
 		}
+		neighbours.clear();
 	}
-
 	return false; 
 }
 
@@ -261,7 +259,7 @@ template <typename T>
 vector<vertex<T>> directed_graph<T>::depth_first(const int& u_id) { 
 
 	
-	return directed_graph<vertex<T>>(); 
+	return vector<vertex<T>>(); 
 }
 
 template <typename T>
