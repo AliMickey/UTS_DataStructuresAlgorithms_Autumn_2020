@@ -225,9 +225,9 @@ bool directed_graph<T>::reachable(const int& u_id, const int& v_id) {
 	vector<int> toDoList;
 	vector<int> doneList;
 	vector<vertex<T>> neighbours;
-	if (u_id == v_id){
-		return true;
-	}
+	//if (u_id == v_id){
+		//return true;
+//	}
 
 	toDoList.push_back(u_id); //Add first ID to toDo
 	
@@ -248,10 +248,15 @@ bool directed_graph<T>::reachable(const int& u_id, const int& v_id) {
 	return false; 
 }
 
-template <typename T> //TODO Complete reachable first
+template <typename T> //TODO
 bool directed_graph<T>::contain_cycles() {
-	
 	//Call reachable with source_id and source_id until return true
+	for (int i = 0; i < adj_list; i++){
+		
+
+
+	}
+
 	return false; 
 }
 

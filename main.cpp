@@ -51,20 +51,20 @@ int main() {
 
 	cout << endl << " " << endl;
 
-	cout << "Is 5 reachable from 1: " << g1.reachable(1, 5) << endl;
-	
-
 	cout << "DFS from 1: " << endl;
 	//vector<vertex<double>> dfs_list = g1.depth_first(1);
 	//for (vertex<double> snb : dfs_list) {
 	 	//cout << "(" << snb.id << ", " << snb.weight << ") ";
 	//}
 
+	cout << endl << " " << endl;
 
 	cout << "Amount of vertices: " << g1.num_vertices() << ", Number of edges: " << g1.num_edges() << endl;
 
-	cout << "Adjacent - 2 & 5: " << g1.adjacent(2,5) << endl;
+	cout << "Reachable: 1 & 5: " << g1.reachable(4, 5) << endl;
 
-	cout << "Incoming edges to 3: " << g1.in_degree(4) << " and outgoing edges: " << g1.out_degree(4) << " and total edges: " << g1.degree(4) << endl;
+	cout << "Adjacent: 2 & 5: " << g1.adjacent(2,5) << endl;
+
+	cout << "Incoming/outgoing/total edges to 3: " << g1.in_degree(3) << "/" << g1.out_degree(3) << "/" << g1.degree(3) << endl;
 
 }
