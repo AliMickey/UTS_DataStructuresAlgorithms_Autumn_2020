@@ -26,7 +26,6 @@ int main() {
 	g1.add_edge(2, 5, 3); //B-E
 	//g1.remove_edge(0, 1);
 
-
 	//Tests
 	vector<vertex<double>> vertex_list = g1.get_vertices();
 	cout << "Vertices: (id, weight):" << endl;
@@ -64,6 +63,8 @@ int main() {
 	cout << "Reachable: 1 & 5: " << g1.reachable(4, 5) << endl;
 
 	cout << "Adjacent: 2 & 5: " << g1.adjacent(2,5) << endl;
+
+	cout << "Contain Cycles: " << g1.contain_cycles() << endl;
 
 	cout << "Incoming/outgoing/total edges to 3: " << g1.in_degree(3) << "/" << g1.out_degree(3) << "/" << g1.degree(3) << endl;
 
