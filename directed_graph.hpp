@@ -228,22 +228,20 @@ bool directed_graph<T>::reachable(const int& u_id, const int& v_id) {
 	//if (u_id == v_id){
 		//return true;
 //	}
-
 	toDoList.push_back(u_id); //Add first ID to toDo
-	
-	while (toDoList.size() != 0){ //While toDo is not empty
+	while (toDoList.size() != 0) { //While toDo is not empty
 		doneList.push_back(toDoList.back()); //Add ID to done list
 		neighbours = get_neighbours(toDoList.back()); //Get neighbours for ID
 		toDoList.pop_back(); //Remove ID from toDo
-		for (int i = 0; i < neighbours.size(); i++){
-			if (neighbours.at(i).id == v_id){
-				return true;
+		for (int i = 0; i < neighbours.size(); i++) { //For each neighbour
+			if (neighbours.at(i).id == v_id){ //If neighbour ID is destination ID
+				return true; //They are reachable
 			}
 			if (!(find(doneList.begin(), doneList.end(), neighbours[i].id) != doneList.end())) { //If ID is not in done list
 				toDoList.push_back(neighbours[i].id); //Add it to do list
 			} 
 		}
-		neighbours.clear();
+		neighbours.clear(); //Delete all neighbours 
 	}
 	return false; 
 }
