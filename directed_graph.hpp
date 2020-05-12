@@ -222,6 +222,7 @@ vector<vertex<T>> directed_graph<T>::get_second_order_neighbours(const int& u_id
 
 template <typename T> //Done
 bool directed_graph<T>::reachable(const int& u_id, const int& v_id) { 
+	//https://stackoverflow.com/a/354366
 	vector<int> toDoList;
 	vector<int> doneList;
 	vector<vertex<T>> neighbours;
@@ -251,7 +252,6 @@ bool directed_graph<T>::contain_cycles() {
 	//Call reachable with source_id and source_id until return true
 	for (int i = 0; i < adj_list; i++){
 		
-
 
 	}
 
