@@ -273,12 +273,9 @@ vector<vertex<T>> directed_graph<T>::breadth_first(const int& u_id) {
 		neighbours = get_neighbours(toDoList.back()); //Get neighbours for ID
 		toDoList.pop_back(); //Remove ID from toDo
 		for (int i = 0; i < neighbours.size(); i++) { //For each neighbour
-			vertices.push_back(neighbours[i]);
-			if (vertices.size() + 1  == num_vertices()){
-				toDoList.clear();
-			}
-			else if (!(find(doneList.begin(), doneList.end(), neighbours[i].id) != doneList.end())) { //If ID is not in done list
-				toDoList.push_back(neighbours[i].id); //Add it to do list
+			if (!(find(doneList.begin(), doneList.end(), neighbours[i].id) != doneList.end())) { //If ID is not in done list
+				toDoList.push_back(neighbours[i].id); //Add it to todo list
+				vertices.push_back(neighbours[i]); //Add neighbour to vertex list
 			} 
 		}
 		neighbours.clear(); //Delete all neighbours 
