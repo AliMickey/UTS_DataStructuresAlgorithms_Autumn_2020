@@ -254,29 +254,32 @@ bool directed_graph<T>::contain_cycles() {
 	return false;
 }
 
-template <typename T> 
+template <typename T> //TODO
 vector<vertex<T>> directed_graph<T>::depth_first(const int& u_id) { //LIFO
-	deque<int> toDoList;
+	vector<int> toDoList;
 	vector<int> doneList;
 	vector<vertex<T>> neighbours;
 	vector<vertex<T>> vertices;
 	toDoList.push_back(u_id); //Add first ID to toDo
 	while (toDoList.size() != 0) { //While toDo is not empty
 		doneList.push_back(toDoList.back()); //Add ID to done list
-		neighbours = get_neighbours(toDoList.back()); //Get neighbours for ID
+
+		neighbours = get_neighbours(toDoList.back()); 
+
 		toDoList.pop_back(); //Remove ID from toDo
-		for (int i = 0; i < neighbours.size(); i++) { //For each neighbour
+		for (int i = 0; i < neighbours.size(); i++) { //For each neighbour //Change this to get neighbours seperately unidirectional
 			if (!(find(doneList.begin(), doneList.end(), neighbours[i].id) != doneList.end())) { //If ID is not in done list
 				toDoList.push_back(neighbours[i].id); //Add it to todo list
 				vertices.push_back(neighbours[i]); //Add neighbour to vertex list
 			} 
 		}
 		neighbours.clear(); //Delete all neighbours 
+		
 	}
 	return vertices;
 }
 
-template <typename T> //Done
+template <typename T> //TODO
 vector<vertex<T>> directed_graph<T>::breadth_first(const int& u_id) { //FIFO
 	deque<int> toDoList;
 	vector<int> doneList;
@@ -299,7 +302,7 @@ vector<vertex<T>> directed_graph<T>::breadth_first(const int& u_id) { //FIFO
 }
 
 template <typename T>
-directed_graph<T> directed_graph<T>::out_tree(const int& u_id) { return directed_graph<vertex<T>>(); }
+directed_graph<T> directed_graph<T>::out_tree(const int& u_id) { return directed_graph<T>(); }
 
 template <typename T>
 vector<vertex<T>> directed_graph<T>::pre_order_traversal(const int& u_id, directed_graph<T>& mst) { return vector<vertex<T>>(); }
@@ -310,7 +313,19 @@ vector<vertex<T>> directed_graph<T>::in_order_traversal(const int& u_id, directe
 template <typename T>
 vector<vertex<T>> directed_graph<T>::post_order_traversal(const int& u_id, directed_graph<T>& mst) { return vector<vertex<T>>(); }
 
-template <typename T>
-vector<vertex<T>> directed_graph<T>::significance_sorting() { return vector<vertex<T>>(); }
+template <typename T> //Done
+vector<vertex<T>> directed_graph<T>::significance_sorting() { 
+	vector<vertex<T>> vertices = get_vertices(); //Get all vertices
+	for (int i = 1; i < vertices.size(); i++){ //Using Insertion Sort
+		vertex<T> x = vertices[i];
+		int pos = i-1;
+		while (pos >= 0 && vertices[pos].weight < x.weight){
+			vertices[pos+1] = vertices[pos];
+			pos--;
+		}
+		vertices[pos + 1] = x;
+	}
+	return vertices;
+}
 
 #endif
