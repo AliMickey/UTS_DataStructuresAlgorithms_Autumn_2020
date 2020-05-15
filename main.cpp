@@ -51,7 +51,7 @@ int main() {
 	cout << endl << " " << endl;
 
 	cout << "DFS from 1: " << endl;
-	vector<vertex<double>> dfs_list = g1.depth_first(2);
+	vector<vertex<double>> dfs_list = g1.depth_first(1);
 	for (vertex<double> x : dfs_list) {
 	 	cout << "(" << x.id << ", " << x.weight << ") ";
 	}
