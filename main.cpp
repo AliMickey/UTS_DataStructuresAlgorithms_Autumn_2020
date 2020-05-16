@@ -50,14 +50,14 @@ int main() {
 	}
 	cout << endl << " " << endl;
 
-	cout << "DFS from 1: " << endl;
-	vector<vertex<double>> dfs_list = g1.depth_first(1);
+	cout << "DFS from 2: " << endl;
+	vector<vertex<double>> dfs_list = g1.depth_first(2);
 	for (vertex<double> x : dfs_list) {
 	 	cout << "(" << x.id << ", " << x.weight << ") ";
 	}
 	cout << endl << " " << endl;
 
-	cout << "BFS from 1: " << endl;
+	cout << "BFS from 2: " << endl;
 	vector<vertex<double>> bfs_list = g1.breadth_first(2);
 	for (vertex<double> x : bfs_list) {
 	 	cout << "(" << x.id << ", " << x.weight << ") ";

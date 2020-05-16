@@ -8,7 +8,7 @@
 #include<set>
 #include<queue>
 #include<stack>
-#include <algorithm>
+#include<algorithm>
 
 using namespace std; 
 
@@ -57,7 +57,7 @@ class directed_graph { //Graph Class
 		bool contain_cycles(); // Return true if the graph contains cycles (there is a path from any vertices directly/indirectly to itself), false otherwise.
 
 		vector<vertex<T>> depth_first(const int&); //Returns the vertices of the graph in the order they are visited in by a depth-first traversal starting at the given vertex.
-		void depth_first_search(unordered_map<int, T>&  vertices, const int u_id, vector<bool>* doneList);
+		void depth_first_search(vector<vertex<T>>& vertices, const int u_id, vector<bool>* doneList);
 		vector<vertex<T>> breadth_first(const int&); //Returns the vertices of the graph in the order they are visisted in by a breadth-first traversal starting at the given vertex.
 
 		directed_graph<T> out_tree(const int&); //Returns a spanning tree of the graph starting at the given vertex using the out-edges. This means every vertex in the tree is reachable from the root.
@@ -258,36 +258,29 @@ bool directed_graph<T>::contain_cycles() {
 
 template <typename T> //TODO
 vector<vertex<T>> directed_graph<T>::depth_first(const int& u_id) { //LIFO
-	//vector<int>* doneList;
-	auto* doneList = new vector<bool>(num_vertices()-1);
+	auto* doneList = new vector<bool>(num_vertices()+1);
 	vector<vertex<T>> final;
-	unordered_map<int, T> vertices;
+	vector<vertex<T>> vertices;
 	depth_first_search(vertices, u_id, doneList);
 	for (int i = 0; i < doneList->size(); i++){
 		if (!doneList->at(i)) { //if (!(find(doneList->begin(), doneList->end(), i) != doneList->end())){
 			depth_first_search(vertices, i, doneList);
 		}
 	}
-
-	// for(auto x: vertices){
-	// 	final.push_back(vertex<T>(x.first, x.second));
-	// }
-	return final; 
+	return vertices; 
 }
 
 template <typename T>
-void directed_graph<T>::depth_first_search(unordered_map<int, T>& vertices, const int u_id, vector<bool>* doneList) {
+void directed_graph<T>::depth_first_search(vector<vertex<T>>& vertices, const int u_id, vector<bool>* doneList) {
 	if (contains(u_id)) {
-		if (1==1){// !(find(doneList->begin(), doneList->end(), u_id) != doneList->end())){
+		if (!doneList->at(u_id)){
 			auto tempVertex = all_vertices.find(u_id);
-			vertices.insert({tempVertex->first, tempVertex->second});
-			//doneList->push_back(*u_id);
+			vertices.push_back({tempVertex->first, tempVertex->second});
 			doneList->at(u_id) = true;
 		}
-		//EVERYTHING WORKS UP TO HERE, MAKE IT SO IT REPEATS
 		for (auto n : get_neighbours(u_id)){
 			if (contains(n.id)){
-				if(n.id < doneList->size()) {//if (!(find(doneList->begin(), doneList->end(), n.id) != doneList->end())) {
+				if (!doneList->at(n.id)){
 					depth_first_search(vertices, n.id, doneList);
 				}
 			}
@@ -295,38 +288,6 @@ void directed_graph<T>::depth_first_search(unordered_map<int, T>& vertices, cons
 	}
 }
 
-// template <typename T>
-// vector<vertex<T>> directed_graph<T>::depth_first(const int& u_id) {
-//     vector<vertex<T>> dfs;
-//     auto* visited = new vector<bool>(vertex_weights.size());
-
-//     depth_first_search(u_id, visited, dfs);
-//     for (int i = 0; i < visited->size(); i++) {
-//         if (!visited->at(i)) {
-//             depth_first_search(i, visited, dfs);
-//         }
-//     }
-
-//     return dfs;
-// }
-
-// template <typename T>
-// void directed_graph<T>::depth_first_search(const int u_id, vector<bool>* visited, vector<vertex<T>>& dfs) {
-//     if (contains(u_id)) {
-//         if (!visited->at(u_id)) {
-//             auto node = vertex_weights.find(u_id);
-//             dfs.push_back(vertex<T>(node->first, node->second));
-//             visited->at(u_id) = true;
-//         }
-//         for (auto neighbour : get_neighbours(u_id)) {
-//             if (contains(neighbour.id)) {
-//                 if (!visited->at(neighbour.id)) {//if (neighbour.id < visited->size()) {
-//                     depth_first_search(neighbour.id, visited, dfs);
-//                 }
-//             }
-//         }
-//     }
-// }
 template <typename T> //TODO
 vector<vertex<T>> directed_graph<T>::breadth_first(const int& u_id) { //FIFO
 	deque<int> toDoList;
