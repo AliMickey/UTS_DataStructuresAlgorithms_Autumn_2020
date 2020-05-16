@@ -289,27 +289,40 @@ void directed_graph<T>::depth_first_search(vector<vertex<T>>& vertices, const in
 	}
 }
 
+// template <typename T> //TODO
+// vector<vertex<T>> directed_graph<T>::breadth_first(const int& u_id) { //FIFO
+// 	deque<int> toDoList;
+// 	vector<int> doneList;
+// 	vector<vertex<T>> neighbours;
+// 	vector<vertex<T>> vertices;
+// 	toDoList.push_back(u_id); //Add first ID to toDo
+// 	while (toDoList.size() != 0) { //While toDo is not empty
+// 		doneList.push_back(toDoList.front()); //Add ID to done list
+// 		neighbours = get_neighbours(toDoList.front()); //Get neighbours for ID
+// 		toDoList.pop_front(); //Remove ID from toDo
+
+// 		for (int i = 0; i < neighbours.size(); i++) { //For each neighbour
+// 		m
+// 			if (!(find(doneList.begin(), doneList.end(), neighbours[i].id) != doneList.end())) { //If ID is not in done list
+// 				toDoList.push_back(neighbours[i].id); //Add it to todo list
+// 				vertices.push_back(neighbours[i]); //Add neighbour to vertex list
+// 			} 
+// 		}
+// 		neighbours.clear(); //Delete all neighbours 
+// 	}
+// 	return vertices; 
+// }
+
+
 template <typename T> //TODO
 vector<vertex<T>> directed_graph<T>::breadth_first(const int& u_id) { //FIFO
-	deque<int> toDoList;
-	vector<int> doneList;
-	vector<vertex<T>> neighbours;
-	vector<vertex<T>> vertices;
-	toDoList.push_back(u_id); //Add first ID to toDo
-	while (toDoList.size() != 0) { //While toDo is not empty
-		doneList.push_back(toDoList.front()); //Add ID to done list
-		neighbours = get_neighbours(toDoList.front()); //Get neighbours for ID
-		toDoList.pop_front(); //Remove ID from toDo
-		for (int i = 0; i < neighbours.size(); i++) { //For each neighbour
-			if (!(find(doneList.begin(), doneList.end(), neighbours[i].id) != doneList.end())) { //If ID is not in done list
-				toDoList.push_back(neighbours[i].id); //Add it to todo list
-				vertices.push_back(neighbours[i]); //Add neighbour to vertex list
-			} 
-		}
-		neighbours.clear(); //Delete all neighbours 
-	}
-	return vertices; 
+	//add initial to todo list
+
+	//make cycle so for each vertex after initial, all neighbours are added to vertices list. 
+
+	//auto x : ??
 }
+
 
 template <typename T>
 directed_graph<T> directed_graph<T>::out_tree(const int& u_id) { return directed_graph<T>(); }
