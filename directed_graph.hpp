@@ -256,32 +256,32 @@ bool directed_graph<T>::contain_cycles() {
 	return false;
 }
 
-template <typename T> //TODO
-vector<vertex<T>> directed_graph<T>::depth_first(const int& u_id) { //LIFO
-	auto* doneList = new vector<bool>(num_vertices()+1);
-	vector<vertex<T>> final;
+template <typename T> //Done
+vector<vertex<T>> directed_graph<T>::depth_first(const int& u_id) { 
+	//Used this as inspiration - https://edstem.org/courses/3890/discussion/233222
+	auto* doneList = new vector<bool>(num_vertices()+1); //Set initial boolean to size + 1
 	vector<vertex<T>> vertices;
-	depth_first_search(vertices, u_id, doneList);
-	for (int i = 0; i < doneList->size(); i++){
-		if (!doneList->at(i)) { //if (!(find(doneList->begin(), doneList->end(), i) != doneList->end())){
+	depth_first_search(vertices, u_id, doneList); //Run the initial dfs on source vertex
+	for (int i = 0; i < doneList->size(); i++){ //Then run it for each vertex NOT visited already
+		if (!doneList->at(i)) {
 			depth_first_search(vertices, i, doneList);
 		}
 	}
 	return vertices; 
 }
 
-template <typename T>
+template <typename T> //Done
 void directed_graph<T>::depth_first_search(vector<vertex<T>>& vertices, const int u_id, vector<bool>* doneList) {
-	if (contains(u_id)) {
-		if (!doneList->at(u_id)){
-			auto tempVertex = all_vertices.find(u_id);
-			vertices.push_back({tempVertex->first, tempVertex->second});
-			doneList->at(u_id) = true;
+	if (contains(u_id)) { //If vertex exists
+		if (!doneList->at(u_id)) { //If it is not visited
+			auto tempVertex = all_vertices.find(u_id); //Set temp to vertex returned by list
+			vertices.push_back({tempVertex->first, tempVertex->second}); //Add it to vertices vector as pair
+			doneList->at(u_id) = true; //Set it to visited
 		}
-		for (auto n : get_neighbours(u_id)){
-			if (contains(n.id)){
-				if (!doneList->at(n.id)){
-					depth_first_search(vertices, n.id, doneList);
+		for (auto n : get_neighbours(u_id)) { //For each neighbour of just visited vertex
+			if (contains(n.id)) { //If it exists
+				if (!doneList->at(n.id)) { //If not visited
+					depth_first_search(vertices, n.id, doneList); //Run dfs on it
 				}
 			}
 		}
