@@ -190,6 +190,7 @@ vector<vertex<T>> directed_graph<T>::get_vertices() {
 
 template <typename T> //Done
 vector<vertex<T>> directed_graph<T>::get_neighbours(const int& u_id) {
+	//Used this as pseudo code - https://stackoverflow.com/a/354366
 	vector<vertex<T>> v;
 	if(contains(u_id)){ //Check if vertex exists
 		for (auto x: adj_list[u_id]){ // adj_list[u_id] is an unordered_map<int, T>
