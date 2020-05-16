@@ -316,11 +316,27 @@ void directed_graph<T>::depth_first_search(vector<vertex<T>>& vertices, const in
 
 template <typename T> //TODO
 vector<vertex<T>> directed_graph<T>::breadth_first(const int& u_id) { //FIFO
-	//add initial to todo list
+	deque<int> toDoList;
+ 	vector<int> doneList;
+ 	vector<vertex<T>> vertices;
 
-	//make cycle so for each vertex after initial, all neighbours are added to vertices list. 
+	doneList.push_back(u_id); //Add first ID to 
+	auto tempVertex = all_vertices.find(u_id);
+	vertices.push_back({tempVertex->first, tempVertex->second});
 
-	//auto x : ??
+	for (int i = 0; i < num_vertices()+1; i++){
+
+		for (auto n : get_neighbours(i)){
+			if (!(find(doneList.begin(), doneList.end(), n.id) != doneList.end())){
+				doneList.push_back(n.id);
+				vertices.push_back(n);
+			}
+	//WORKS, MAKE IT SO IT ADDS INCOMING NEIGHBOURS (VERTICES ABOVE INITIAL)
+		}
+	}
+	
+	
+	return vertices;
 }
 
 
