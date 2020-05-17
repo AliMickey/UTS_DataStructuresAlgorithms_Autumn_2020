@@ -21,19 +21,19 @@ int main() {
 
 
 	//Edges for BFS and Tree
-	g1.add_edge(1,2,1);
-	g1.add_edge(1,3,2);
-	g1.add_edge(2,4,3);
-	g1.add_edge(2,5,4);
-	g1.add_edge(3,6,5);
+	// g1.add_edge(1,2,1);
+	// g1.add_edge(1,3,2);
+	// g1.add_edge(2,4,3);
+	// g1.add_edge(2,5,4);
+	// g1.add_edge(3,6,5);
 
-	// g1.add_edge(1, 2, 6); //A-B
-	// g1.add_edge(1, 3, 9); //A-C 
-	// g1.add_edge(3, 4, 4); //C-D
-	// g1.add_edge(4, 3, 7); //D-C
-	// g1.add_edge(4, 1, 1); //D-A
-	// g1.add_edge(4, 5, 5); //D-E
-	// g1.add_edge(2, 5, 3); //B-E
+	g1.add_edge(1, 2, 6); //A-B
+	g1.add_edge(1, 3, 9); //A-C 
+	g1.add_edge(3, 4, 4); //C-D
+	g1.add_edge(4, 3, 7); //D-C
+	g1.add_edge(4, 1, 1); //D-A
+	g1.add_edge(4, 5, 5); //D-E
+	g1.add_edge(2, 5, 3); //B-E
 
 	//g1.remove_edge(0, 1);
 
@@ -69,7 +69,7 @@ int main() {
 	cout << endl << " " << endl;
 
 	cout << "BFS from 2: " << endl;
-	vector<vertex<double>> bfs_list = g1.breadth_first(3);
+	vector<vertex<double>> bfs_list = g1.breadth_first(1);
 	for (vertex<double> x : bfs_list) {
 	 	cout << "(" << x.id << ", " << x.weight << ") ";
 	}
