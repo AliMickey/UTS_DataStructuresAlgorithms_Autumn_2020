@@ -111,7 +111,7 @@ template <typename T> //Done
 void directed_graph<T>::add_edge(const int& u_id, const int& v_id, const T& uv_weight) {
 	if(contains(u_id) && contains(v_id)) { //Check if vertices exist
 		if(adj_list[u_id].find(v_id)==adj_list[u_id].end()) { //Check if edge is not in list 
-			adj_list[u_id].insert({v_id, uv_weight}); //Add the edge
+			adj_list[u_id].insert({v_id, uv_weight}); //Add the edge for corresponding index
 		}
 	}
 }
@@ -326,11 +326,16 @@ vector<vertex<T>> directed_graph<T>::breadth_first(const int& u_id) { //FIFO
 	vertices.push_back({tempVertex->first, tempVertex->second});
 
 	for (int i = 0; i < num_vertices()+1; i++) {
+		auto currentTemp = all_vertices.find(i);
+		doneList.push_back(i);
+		
 
 		for (auto n : get_neighbours(i)) {
 			if (!(find(doneList.begin(), doneList.end(), n.id) != doneList.end())) {
+				vertices.push_back({currentTemp->first, currentTemp->second});
 				doneList.push_back(n.id);
 				vertices.push_back(n);
+				
 			}
 	//WORKS, MAKE IT SO IT ADDS INCOMING NEIGHBOURS (VERTICES ABOVE INITIAL)
 		}
@@ -342,7 +347,21 @@ vector<vertex<T>> directed_graph<T>::breadth_first(const int& u_id) { //FIFO
 
 
 template <typename T>
-directed_graph<T> directed_graph<T>::out_tree(const int& u_id) { return directed_graph<T>(); }
+directed_graph<T> directed_graph<T>::out_tree(const int& u_id) { 
+	directed_graph<T> out_tree;
+
+	
+	vertex<double> v1(6, 100);
+
+	out_tree.add_vertex(v1);
+	//out_tree.add_edge();
+
+
+
+
+	return out_tree; 
+	
+}
 
 template <typename T>
 vector<vertex<T>> directed_graph<T>::pre_order_traversal(const int& u_id, directed_graph<T>& mst) { return vector<vertex<T>>(); }

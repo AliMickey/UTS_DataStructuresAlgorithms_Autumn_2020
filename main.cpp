@@ -75,6 +75,15 @@ int main() {
 	}
 	cout << endl << " " << endl;
 
+	cout << "Tree from 1: " << endl;
+
+	vector<vertex<double>> tree = g1.out_tree(1).get_vertices();	
+	for (vertex<double> vt : tree) {
+	 	cout << "(" << vt.id << ", " << vt.weight << ") ";
+	}
+
+	cout << endl << " " << endl;
+
 	cout << "Amount of vertices: " << g1.num_vertices() << ", Number of edges: " << g1.num_edges() << endl;
 
 	cout << "Reachable: 1 & 5: " << g1.reachable(4, 5) << endl;
