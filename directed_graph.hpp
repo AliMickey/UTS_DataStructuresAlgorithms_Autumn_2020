@@ -320,12 +320,11 @@ vector<vertex<T>> directed_graph<T>::breadth_first(const int& u_id) { //FIFO
 	return vertices;
 }
 
-template <typename T>
+template <typename T> //Done
 directed_graph<T> directed_graph<T>::out_tree(const int& u_id) { 
-	directed_graph<T> tree;
-	vector<vertex<T>> vertices;
-	vector<int> doneList;
-	doneList.push_back(u_id);
+	directed_graph<T> tree; //Set initial tree
+	vector<int> doneList; //Initial list for visited vertices
+	doneList.push_back(u_id); //Add initial source_id
 	if (contains(u_id)) {
 		for (int i = 0; i <= num_vertices(); i++) {
 			if (contains(i)) {
@@ -333,19 +332,17 @@ directed_graph<T> directed_graph<T>::out_tree(const int& u_id) {
 				tree.add_vertex({tempVertex->first, tempVertex->second});
 			}
 		}
-	
 	 	for (int i = 0; i < num_vertices(); i++) { //For each vertex
 			for (auto n : get_neighbours(i)) { //For each neighbour
-				if ((tree.adj_list[i].find(n.id) == tree.adj_list[i].end()) && (!(vector_contains(doneList, n.id)))) {
-					auto tempEdge = adj_list[i].find(n.id);
-					tree.add_edge(i, tempEdge->first, tempEdge->second);
-					doneList.push_back(n.id);
+				if ((tree.adj_list[i].find(n.id) == tree.adj_list[i].end()) && (!(vector_contains(doneList, n.id)))) { //If edge (i -> neighbour) does not exist AND neighbour is not in doneList
+					auto tempEdge = adj_list[i].find(n.id); //Set a temp edge to the corresponding edge
+					tree.add_edge(i, tempEdge->first, tempEdge->second); //Add it to the tree
+					doneList.push_back(n.id); //Add the neighbour to doneList
 				}
 			}
 	 	}
-	 }
+	}
 	return tree; 
-	
 }
 
 template <typename T>
