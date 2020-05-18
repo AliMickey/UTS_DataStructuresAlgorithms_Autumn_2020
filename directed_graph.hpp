@@ -325,27 +325,23 @@ directed_graph<T> directed_graph<T>::out_tree(const int& u_id) {
 	directed_graph<T> tree;
 	vector<vertex<T>> vertices;
 	vector<int> doneList;
-	//out_tree.add_vertex(v1);
-	//out_tree.add_edge();
-	//vertex<double> v1(6, 100);
+	doneList.push_back(u_id);
 	if (contains(u_id)) {
-		for (int i = 0; i < num_vertices()+1; i++) {
+		for (int i = 0; i <= num_vertices(); i++) {
 			if (contains(i)) {
 				auto tempVertex = all_vertices.find(i); //Set temp to vertex returned by list
 				tree.add_vertex({tempVertex->first, tempVertex->second});
 			}
 		}
 	
-	 	for (int i = 0; i < num_vertices()+1; i++) {
-
-			 for (auto n : get_neighbours(i)) { //For each neighbour
+	 	for (int i = 0; i < num_vertices(); i++) { //For each vertex
+			for (auto n : get_neighbours(i)) { //For each neighbour
 				if ((tree.adj_list[i].find(n.id) == tree.adj_list[i].end()) && (!(vector_contains(doneList, n.id)))) {
-					for (auto x : adj_list[n.id]) {
-						tree.add_edge(i, x.first, x.second);
-					}
-					
+					auto tempEdge = adj_list[i].find(n.id);
+					tree.add_edge(i, tempEdge->first, tempEdge->second);
+					doneList.push_back(n.id);
 				}
-			 }
+			}
 	 	}
 	 }
 	return tree; 
