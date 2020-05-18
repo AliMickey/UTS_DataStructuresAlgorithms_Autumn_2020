@@ -214,7 +214,7 @@ vector<vertex<T>> directed_graph<T>::get_second_order_neighbours(const int& u_id
 		for (int i = 0; i < firstNeighboursID.size(); i++) { //For each first neighbour
 			tempSecondNeighbours = get_neighbours(firstNeighboursID.at(i)); //Get its neighbours and add to temp
 			for (int j = 0; j < tempSecondNeighbours.size(); j++) { //For each second neighbour
-				if (!vector_contains(doneList, tempSecondNeighbours[j].id)) && (tempSecondNeighbours.at(j).id != u_id )) { //If ID is NOT in done list AND ID is not source vertex
+				if (!(vector_contains(doneList, tempSecondNeighbours[j].id)) && (tempSecondNeighbours.at(j).id != u_id )) { //If ID is NOT in done list AND ID is not source vertex
 					secondNeighbours.push_back(tempSecondNeighbours[j]); //Add neighbour to returnable <vector>
 				}
 				doneList.push_back(tempSecondNeighbours[j].id); //Add ID to done list
@@ -339,7 +339,7 @@ directed_graph<T> directed_graph<T>::out_tree(const int& u_id) {
 	 	for (int i = 0; i < num_vertices()+1; i++) {
 
 			 for (auto n : get_neighbours(i)) { //For each neighbour
-				if ( (tree.adj_list[i].find(n.id) == tree.adj_list[i].end()) && (!(find(doneList.begin(), doneList.end(), n.id) != doneList.end())) ) {
+				if ((tree.adj_list[i].find(n.id) == tree.adj_list[i].end()) && (!(vector_contains(doneList, n.id)))) {
 					for (auto x : adj_list[n.id]) {
 						tree.add_edge(i, x.first, x.second);
 					}
