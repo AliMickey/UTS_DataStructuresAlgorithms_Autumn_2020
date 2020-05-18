@@ -9,14 +9,12 @@ int main() {
 	vertex<double> v3(3, 400); //C
 	vertex<double> v4(4, 710); //D
 	vertex<double> v5(5, 221); //E
-	vertex<double> v6(6, 100);
 
 	g1.add_vertex(v1);
 	g1.add_vertex(v2);
 	g1.add_vertex(v3);
 	g1.add_vertex(v4);
 	g1.add_vertex(v5);
-	g1.add_vertex(v6);
 	//g1.remove_vertex(1);
 
 
@@ -34,6 +32,7 @@ int main() {
 	g1.add_edge(4, 1, 1); //D-A
 	g1.add_edge(4, 5, 5); //D-E
 	g1.add_edge(2, 5, 3); //B-E
+	//g1.add_edge(1,4,50);
 
 	//g1.remove_edge(0, 1);
 
@@ -47,7 +46,7 @@ int main() {
 	cout << endl << " " << endl;
 
 	cout << "Outgoing neighbours of 4 (id, weight):" << endl;
-	vector<vertex<double>> neighbour_list = g1.get_neighbours(2);
+	vector<vertex<double>> neighbour_list = g1.get_neighbours(4);
 	for (vertex<double> nb : neighbour_list) {
 	 	cout << "(" << nb.id << ", " << nb.weight << ") ";
 	}
@@ -81,6 +80,8 @@ int main() {
 	for (vertex<double> vt : tree) {
 	 	cout << "(" << vt.id << ", " << vt.weight << ") ";
 	}
+
+	cout << g1.out_tree(1).num_edges();
 
 	cout << endl << " " << endl;
 

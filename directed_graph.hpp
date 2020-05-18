@@ -68,6 +68,7 @@ class directed_graph { //Graph Class
 		vector<vertex<T>> post_order_traversal(const int&, directed_graph<T>&); // returns the vertices in ther visitig order of a post-order traversal of the minimum spanning tree starting at the given vertex.
 
 		vector<vertex<T>> significance_sorting(); // Return a vector containing a sorted list of the vertices in descending order of their significance.
+		bool vector_contains(const vector<int> u_id, const int& searchItem);
 
 	};
 
@@ -213,7 +214,7 @@ vector<vertex<T>> directed_graph<T>::get_second_order_neighbours(const int& u_id
 		for (int i = 0; i < firstNeighboursID.size(); i++) { //For each first neighbour
 			tempSecondNeighbours = get_neighbours(firstNeighboursID.at(i)); //Get its neighbours and add to temp
 			for (int j = 0; j < tempSecondNeighbours.size(); j++) { //For each second neighbour
-				if (!(find(doneList.begin(), doneList.end(), tempSecondNeighbours[j].id) != doneList.end()) && tempSecondNeighbours.at(j).id != u_id ) { //If ID is NOT in done list AND ID is not source vertex
+				if (!vector_contains(doneList, tempSecondNeighbours[j].id)) && (tempSecondNeighbours.at(j).id != u_id )) { //If ID is NOT in done list AND ID is not source vertex
 					secondNeighbours.push_back(tempSecondNeighbours[j]); //Add neighbour to returnable <vector>
 				}
 				doneList.push_back(tempSecondNeighbours[j].id); //Add ID to done list
@@ -237,7 +238,7 @@ bool directed_graph<T>::reachable(const int& u_id, const int& v_id) {
 			if (neighbours.at(i).id == v_id) { //If neighbour ID is destination ID
 				return true; //They are reachable
 			}
-			if (!(find(doneList.begin(), doneList.end(), neighbours[i].id) != doneList.end())) { //If ID is not in done list
+			if (!vector_contains(doneList, neighbours[i].id)) { //If ID is not in done list
 				toDoList.push_back(neighbours[i].id); //Add it to do list
 			} 
 		}
@@ -295,25 +296,25 @@ vector<vertex<T>> directed_graph<T>::breadth_first(const int& u_id) { //FIFO
  	vector<int> doneList;
  	vector<vertex<T>> vertices;
 
-	doneList.push_back(u_id); //Add first ID to 
-	auto tempVertex = all_vertices.find(u_id);
-	vertices.push_back({tempVertex->first, tempVertex->second});
+	// doneList.push_back(u_id); //Add first ID to 
+	// auto tempVertex = all_vertices.find(u_id);
+	// vertices.push_back({tempVertex->first, tempVertex->second});
 
-	for (int i = 0; i < num_vertices()+1; i++) {
-		auto currentTemp = all_vertices.find(i);
-		doneList.push_back(i);
+	// for (int i = 0; i < num_vertices()+1; i++) {
+	// 	auto currentTemp = all_vertices.find(i);
+	// 	doneList.push_back(i);
 		
 
-		for (auto n : get_neighbours(i)) {
-			if (!(find(doneList.begin(), doneList.end(), n.id) != doneList.end())) {
-				vertices.push_back({currentTemp->first, currentTemp->second});
-				doneList.push_back(n.id);
-				vertices.push_back(n);
+	// 	for (auto n : get_neighbours(i)) {
+	// 		if (!(find(doneList.begin(), doneList.end(), n.id) != doneList.end())) {
+	// 			vertices.push_back({currentTemp->first, currentTemp->second});
+	// 			doneList.push_back(n.id);
+	// 			vertices.push_back(n);
 				
-			}
-	//WORKS, MAKE IT SO IT ADDS INCOMING NEIGHBOURS (VERTICES ABOVE INITIAL)
-		}
-	}
+	// 		}
+	// //WORKS, MAKE IT SO IT ADDS INCOMING NEIGHBOURS (VERTICES ABOVE INITIAL)
+	// 	}
+	// }
 	
 	
 	return vertices;
@@ -323,31 +324,30 @@ template <typename T>
 directed_graph<T> directed_graph<T>::out_tree(const int& u_id) { 
 	directed_graph<T> tree;
 	vector<vertex<T>> vertices;
-	//
+	vector<int> doneList;
 	//out_tree.add_vertex(v1);
 	//out_tree.add_edge();
 	//vertex<double> v1(6, 100);
-	auto initalVertex = all_vertices.find(u_id); //Set temp to vertex returned by list
-	tree.add_vertex({initalVertex->first, initalVertex->second});
-
 	if (contains(u_id)) {
-		int vertices_size = num_vertices();
-		
-	 	for (int i = 0; i < vertices_size; i++){
+		for (int i = 0; i < num_vertices()+1; i++) {
+			if (contains(i)) {
+				auto tempVertex = all_vertices.find(i); //Set temp to vertex returned by list
+				tree.add_vertex({tempVertex->first, tempVertex->second});
+			}
+		}
+	
+	 	for (int i = 0; i < num_vertices()+1; i++) {
 
-
-
-
+			 for (auto n : get_neighbours(i)) { //For each neighbour
+				if ( (tree.adj_list[i].find(n.id) == tree.adj_list[i].end()) && (!(find(doneList.begin(), doneList.end(), n.id) != doneList.end())) ) {
+					for (auto x : adj_list[n.id]) {
+						tree.add_edge(i, x.first, x.second);
+					}
+					
+				}
+			 }
 	 	}
-
-
-
-
 	 }
-
-
-
-
 	return tree; 
 	
 }
@@ -375,5 +375,14 @@ vector<vertex<T>> directed_graph<T>::significance_sorting() {
 	}
 	return vertices;
 }
+
+template <typename T> //Done
+bool directed_graph<T>::vector_contains(const vector<int> list, const int& searchItem) { 
+	if (find(list.begin(), list.end(), searchItem) != list.end()) {
+		return true;
+	}
+	return false;
+}
+
 
 #endif
