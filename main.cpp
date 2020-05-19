@@ -87,7 +87,7 @@ int main() {
 
 	cout << "Amount of vertices: " << g1.num_vertices() << ", Number of edges: " << g1.num_edges() << endl;
 
-	cout << "Reachable: 1 & 5: " << g1.reachable(4, 5) << endl;
+	cout << "Reachable: 4 & 5: " << g1.reachable(4, 5) << endl;
 
 	cout << "Adjacent: 2 & 5: " << g1.adjacent(2,5) << endl;
 
