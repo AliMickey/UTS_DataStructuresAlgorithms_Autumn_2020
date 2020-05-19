@@ -81,7 +81,7 @@ int main() {
 	 	cout << "(" << vt.id << ", " << vt.weight << ") ";
 	}
 
-	cout << g1.out_tree(1).num_edges();
+	cout << "Edges: " << g1.out_tree(1).num_edges();
 
 	cout << endl << " " << endl;
 

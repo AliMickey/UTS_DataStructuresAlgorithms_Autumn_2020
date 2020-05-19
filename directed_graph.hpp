@@ -292,23 +292,22 @@ void directed_graph<T>::depth_first_search(vector<vertex<T>>& vertices, const in
 
 template <typename T> //TODO
 vector<vertex<T>> directed_graph<T>::breadth_first(const int& u_id) { //FIFO
-	deque<int> toDoList;
- 	vector<int> doneList;
- 	vector<vertex<T>> vertices;
+	deque<int> toDoList; //Queue to support front()
+ 	vector<int> doneList; //Track visited vertices
+ 	vector<vertex<T>> vertices; 
 	vector<vertex<T>> neighbours;
 	toDoList.push_back(u_id); //Add source to toDo
 	doneList.push_back(u_id); //Add source to done
-	while (!toDoList.empty()) {
-		int currVertex = toDoList.front(); 
-		toDoList.pop_front();
-		auto tempVertex = all_vertices.find(currVertex);
-		vertices.push_back({tempVertex->first, tempVertex->second});
-		neighbours = get_neighbours(currVertex);
-
-		for (int i = 0; i < neighbours.size(); i++) {
-			if (!(vector_contains(doneList, neighbours[i].id))) {
-				doneList.push_back(neighbours[i].id);
-				toDoList.push_back(neighbours[i].id);
+	while (!toDoList.empty()) { //While todo is not empty
+		int currVertexID = toDoList.front(); //Set temp vertex to first vertex in queue
+		neighbours = get_neighbours(currVertexID); //Get the vertex's neighbours
+		auto currVertex = all_vertices.find(currVertexID); //Find the current vertex 
+		vertices.push_back({currVertex->first, currVertex->second}); //Add it to the returnable <vector>
+		toDoList.pop_front(); //Remove the vertex from the queue
+		for (int i = 0; i < neighbours.size(); i++) { //For each neighour of currVertex
+			if (!(vector_contains(doneList, neighbours[i].id))) { //If it is not visited
+				doneList.push_back(neighbours[i].id); //Mark it as visited
+				toDoList.push_back(neighbours[i].id); //Add it to the queue
 			}
 		}
 	}
