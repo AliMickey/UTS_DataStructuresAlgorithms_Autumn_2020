@@ -295,28 +295,23 @@ vector<vertex<T>> directed_graph<T>::breadth_first(const int& u_id) { //FIFO
 	deque<int> toDoList;
  	vector<int> doneList;
  	vector<vertex<T>> vertices;
+	vector<vertex<T>> neighbours;
+	toDoList.push_back(u_id); //Add source to toDo
+	doneList.push_back(u_id); //Add source to done
+	while (!toDoList.empty()) {
+		int currVertex = toDoList.front(); 
+		toDoList.pop_front();
+		auto tempVertex = all_vertices.find(currVertex);
+		vertices.push_back({tempVertex->first, tempVertex->second});
+		neighbours = get_neighbours(currVertex);
 
-	// doneList.push_back(u_id); //Add first ID to 
-	// auto tempVertex = all_vertices.find(u_id);
-	// vertices.push_back({tempVertex->first, tempVertex->second});
-
-	// for (int i = 0; i < num_vertices()+1; i++) {
-	// 	auto currentTemp = all_vertices.find(i);
-	// 	doneList.push_back(i);
-		
-
-	// 	for (auto n : get_neighbours(i)) {
-	// 		if (!(find(doneList.begin(), doneList.end(), n.id) != doneList.end())) {
-	// 			vertices.push_back({currentTemp->first, currentTemp->second});
-	// 			doneList.push_back(n.id);
-	// 			vertices.push_back(n);
-				
-	// 		}
-	// //WORKS, MAKE IT SO IT ADDS INCOMING NEIGHBOURS (VERTICES ABOVE INITIAL)
-	// 	}
-	// }
-	
-	
+		for (int i = 0; i < neighbours.size(); i++) {
+			if (!(vector_contains(doneList, neighbours[i].id))) {
+				doneList.push_back(neighbours[i].id);
+				toDoList.push_back(neighbours[i].id);
+			}
+		}
+	}
 	return vertices;
 }
 
