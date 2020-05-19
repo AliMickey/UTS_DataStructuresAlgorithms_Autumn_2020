@@ -61,14 +61,14 @@ int main() {
 	cout << endl << " " << endl;
 
 	cout << "DFS from 2: " << endl;
-	vector<vertex<double>> dfs_list = g1.depth_first(1);
+	vector<vertex<double>> dfs_list = g1.depth_first(2);
 	for (vertex<double> x : dfs_list) {
 	 	cout << "(" << x.id << ", " << x.weight << ") ";
 	}
 	cout << endl << " " << endl;
 
 	cout << "BFS from 2: " << endl;
-	vector<vertex<double>> bfs_list = g1.breadth_first(1);
+	vector<vertex<double>> bfs_list = g1.breadth_first(2);
 	for (vertex<double> x : bfs_list) {
 	 	cout << "(" << x.id << ", " << x.weight << ") ";
 	}
@@ -82,6 +82,16 @@ int main() {
 	}
 
 	cout << "Edges: " << g1.out_tree(1).num_edges();
+
+	cout << endl << " " << endl;
+
+	cout << "In order Traversal from 1: " << endl;
+
+	auto directedGraph =  g1.out_tree(2);
+	vector<vertex<double>> inorderT = g1.in_order_traversal(2, directedGraph);	
+	for (vertex<double> iot : inorderT) {
+	 	cout << "(" << iot.id << ", " << iot.weight << ") ";
+	}
 
 	cout << endl << " " << endl;
 

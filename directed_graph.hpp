@@ -65,7 +65,7 @@ class directed_graph { //Graph Class
 
 		vector<vertex<T>> pre_order_traversal(const int&, directed_graph<T>&); // returns the vertices in the visiting order of a pre-order traversal of the minimum spanning tree starting at the given vertex.
 		vector<vertex<T>> in_order_traversal(const int&, directed_graph<T>&); // returns the vertices in the visiting order of an in-order traversal of the minimum spanning tree starting at the given vertex.
-		vector<vertex<T>> post_order_traversal(const int&, directed_graph<T>&); // returns the vertices in ther visitig order of a post-order traversal of the minimum spanning tree starting at the given vertex.
+		vector<vertex<T>> post_order_traversal(const int&, directed_graph<T>&); // returns the vertices in ther visiting order of a post-order traversal of the minimum spanning tree starting at the given vertex.
 
 		vector<vertex<T>> significance_sorting(); // Return a vector containing a sorted list of the vertices in descending order of their significance.
 		bool vector_contains(const vector<int> u_id, const int& searchItem);
@@ -290,7 +290,7 @@ void directed_graph<T>::depth_first_search(vector<vertex<T>>& vertices, const in
 	}
 }
 
-template <typename T> //TODO
+template <typename T> //Done
 vector<vertex<T>> directed_graph<T>::breadth_first(const int& u_id) { //FIFO
 	deque<int> toDoList; //Queue to support front()
  	vector<int> doneList; //Track visited vertices
@@ -340,13 +340,25 @@ directed_graph<T> directed_graph<T>::out_tree(const int& u_id) {
 }
 
 template <typename T>
-vector<vertex<T>> directed_graph<T>::pre_order_traversal(const int& u_id, directed_graph<T>& mst) { return vector<vertex<T>>(); }
+vector<vertex<T>> directed_graph<T>::pre_order_traversal(const int& u_id, directed_graph<T>& mst) { 
+	
+
+	return vector<vertex<T>>(); 
+	
+}
 
 template <typename T>
-vector<vertex<T>> directed_graph<T>::in_order_traversal(const int& u_id, directed_graph<T>& mst) { return vector<vertex<T>>(); }
+vector<vertex<T>> directed_graph<T>::in_order_traversal(const int& u_id, directed_graph<T>& mst) { 
+	return mst.depth_first(u_id);
+}
 
 template <typename T>
-vector<vertex<T>> directed_graph<T>::post_order_traversal(const int& u_id, directed_graph<T>& mst) { return vector<vertex<T>>(); }
+vector<vertex<T>> directed_graph<T>::post_order_traversal(const int& u_id, directed_graph<T>& mst) { 
+	
+	
+	return vector<vertex<T>>(); 
+	
+}
 
 template <typename T> //Done
 vector<vertex<T>> directed_graph<T>::significance_sorting() { 
@@ -365,11 +377,10 @@ vector<vertex<T>> directed_graph<T>::significance_sorting() {
 
 template <typename T> //Done
 bool directed_graph<T>::vector_contains(const vector<int> list, const int& searchItem) { 
-	if (find(list.begin(), list.end(), searchItem) != list.end()) {
+	if (find(list.begin(), list.end(), searchItem) != list.end()) { //If search item is not in the list
 		return true;
 	}
 	return false;
 }
-
 
 #endif
