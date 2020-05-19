@@ -341,15 +341,14 @@ directed_graph<T> directed_graph<T>::out_tree(const int& u_id) {
 
 template <typename T>
 vector<vertex<T>> directed_graph<T>::pre_order_traversal(const int& u_id, directed_graph<T>& mst) { 
-	
-
-	return vector<vertex<T>>(); 
-	
+	return mst.depth_first(u_id);
 }
 
 template <typename T>
 vector<vertex<T>> directed_graph<T>::in_order_traversal(const int& u_id, directed_graph<T>& mst) { 
-	return mst.depth_first(u_id);
+	
+	
+	return vector<vertex<T>>(); 
 }
 
 template <typename T>
@@ -357,7 +356,6 @@ vector<vertex<T>> directed_graph<T>::post_order_traversal(const int& u_id, direc
 	
 	
 	return vector<vertex<T>>(); 
-	
 }
 
 template <typename T> //Done
