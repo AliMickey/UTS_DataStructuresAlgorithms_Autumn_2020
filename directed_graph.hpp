@@ -339,16 +339,22 @@ directed_graph<T> directed_graph<T>::out_tree(const int& u_id) {
 	return tree; 
 }
 
-template <typename T>
+template <typename T> //Done
 vector<vertex<T>> directed_graph<T>::pre_order_traversal(const int& u_id, directed_graph<T>& mst) { 
 	return mst.depth_first(u_id);
 }
 
 template <typename T>
 vector<vertex<T>> directed_graph<T>::in_order_traversal(const int& u_id, directed_graph<T>& mst) { 
-	
-	
-	return vector<vertex<T>>(); 
+	vector<vertex<T>> vertices;
+	deque<int> verticesID;
+
+	for (int i = 0; i < num_vertices(); i++){
+		if (contains(i)){
+			verticesID.push_back(all_vertices.find(i).id);
+		}
+	}
+	return vertices; 
 }
 
 template <typename T>
