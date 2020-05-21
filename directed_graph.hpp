@@ -347,21 +347,27 @@ vector<vertex<T>> directed_graph<T>::pre_order_traversal(const int& u_id, direct
 template <typename T>
 vector<vertex<T>> directed_graph<T>::in_order_traversal(const int& u_id, directed_graph<T>& mst) { 
 	vector<vertex<T>> vertices;
-	deque<int> verticesID;
 
-	for (int i = 0; i < num_vertices(); i++){
-		if (contains(i)){
-			verticesID.push_back(all_vertices.find(i).id);
-		}
-	}
+
+
+
 	return vertices; 
 }
 
 template <typename T>
 vector<vertex<T>> directed_graph<T>::post_order_traversal(const int& u_id, directed_graph<T>& mst) { 
+
+	vector<vertex<T>> Tempvertices;
+	vector<vertex<T>> vertices;
+	
+	Tempvertices = mst.depth_first(u_id);
+	for (int i = Tempvertices.size()-1; i >= 0; i--) {
+		vertices.push_back(Tempvertices.at(i));
+	}
 	
 	
-	return vector<vertex<T>>(); 
+	
+	return vertices; 
 }
 
 template <typename T> //Done

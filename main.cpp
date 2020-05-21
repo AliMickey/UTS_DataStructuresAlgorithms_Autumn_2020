@@ -87,10 +87,19 @@ int main() {
 
 	cout << "Pre order Traversal from 1: " << endl;
 
-	auto directedGraph =  g1.out_tree(2);
-	vector<vertex<double>> inorderT = g1.pre_order_traversal(1, directedGraph);	
-	for (vertex<double> iot : inorderT) {
-	 	cout << "(" << iot.id << ", " << iot.weight << ") ";
+	auto directedGraph =  g1.out_tree(1);
+	vector<vertex<double>> preOrder = g1.pre_order_traversal(1, directedGraph);	
+	for (vertex<double> po : preOrder) {
+	 	cout << "(" << po.id << ", " << po.weight << ") ";
+	}
+
+	cout << endl << " " << endl;
+
+	cout << "Post order Traversal from 1: " << endl;
+
+	vector<vertex<double>> inorder = g1.post_order_traversal(1, directedGraph);	
+	for (vertex<double> pot : inorder) {
+	 	cout << "(" << pot.id << ", " << pot.weight << ") ";
 	}
 
 	cout << endl << " " << endl;
