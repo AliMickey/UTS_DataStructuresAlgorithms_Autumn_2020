@@ -30,8 +30,18 @@ using namespace std;
  */
 template <typename T>
 vector<vertex<T>> shortest_path(directed_graph<T>& g, int& u_id, int& v_id) {
+  vector<vertex<T>> vertices;
 
-  return vector<vertex<T>>();
+  if (g.reachable(u_id, v_id)) {
+    
+
+  }
+
+  else {
+    return vector<vertex<T>>()
+  }
+
+  return vertices;
 
 }
 
@@ -42,10 +52,71 @@ vector<vertex<T>> shortest_path(directed_graph<T>& g, int& u_id, int& v_id) {
  * v is reachable from u and u is reachable from v.
  */
 
-template <typename T>
-vector<vector<vertex<T>>> strongly_connected_components(directed_graph<T>& g) {
+template <typename T>// vector<vector<vertex<T>>>
+vector<vertex<T>> strongly_connected_components(directed_graph<T>& g) {
+  vector<vertex<T>> vertices;
+  int n = g.num_vertices();
+  int dfn[n] = {0}, low[n], dfn_cnt = 0;
+  stack<int> s;
+  set<int> in_s;
+  set<set<int>> all_sccs;
 
-  return vector<vector<vertex<T>>>();
+  for (auto u: g.get_vertices()) {
+    if (!dfn[u.id]) {
+      sccRecursive(u.id, dfn, low, dfn_cnt, s, in_s, all_sccs, vertices, g);
+    }
+  }
+
+  for (set<set<int>>::iterator i = all_sccs.begin(); i != all_sccs.end(); i++){
+    //vertices.push_back(all_sccs.);
+   // copy(all_sccs.begin(), all_sccs.end(), back_inserter(vertices));
+
+  }
+
+ // vertices.assign(all_sccs.begin(), all_sccs.end());
+
+  return vertices;
+}
+
+
+template <typename T>
+void sccRecursive(int& u_id, int dfn[], int low[], int& dfn_cnt, stack<int>& s, set<int>& in_s, set<set<int>>& all_sccs, vector<vertex<T>>& vertices, directed_graph<T>& g) {
+  low[u_id] = dfn[u_id] = ++dfn_cnt;
+  s.push(u_id); in_s.insert(u_id);
+   
+  for (auto v: g.get_neighbours(u_id)) {
+    if (!dfn[v.id]) {
+      sccRecursive(v.id, dfn, low, dfn_cnt, s, in_s, all_sccs, vertices, g);
+      low[u_id] = min(low[u_id], low[v.id]);
+    }
+
+    else if (in_s.find(v.id) != in_s.end()) {
+      low[u_id] = min(low[u_id], dfn[v.id]);
+    }
+  }
+
+  if (dfn[u_id] == low[u_id]) {
+    set<int> scc;
+    while (s.top() != u_id) {
+      scc.insert(s.top()); 
+      vertices.push_back({s.top(), g.get_vertices().at(s.top()).weight});
+      in_s.erase(s.top());
+      s.pop();
+    }
+    scc.insert(s.top()); 
+    vertices.push_back({s.top(), g.get_vertices().at(s.top()).weight});
+    in_s.erase(s.top()); 
+    s.pop(); 
+    all_sccs.insert(scc);   
+    
+  }
+
+  
+
+
+
+
+
 
 }
 
