@@ -43,11 +43,11 @@ int main() {
 	vector<vector<vertex<double>>> sc = strongly_connected_components(g1);
 	int count = 0;
 	for (vector<vertex<double>> scv : sc) {
-		cout << "Pair: " << scv.at(0).id << " ";
-            for (vertex<double> scva : scv) {
-	 	        cout << "(" << scva.id << ", " << scva.weight << ") ";   
-				count ++;
-            }     
+		for (vertex<double> scva : scv) {
+			cout << "(" << scva.id << ", " << scva.weight << ") ";   
+			count ++;
+		}     
+		cout << "| ";
     }
 	cout << "Total: " << count << " " << endl;
 

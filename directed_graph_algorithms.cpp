@@ -75,15 +75,14 @@ vector<vertex<T>> shortest_path(directed_graph<T>& g, const int& u_id, const int
  * v is reachable from u and u is reachable from v.
  */
 
-template <typename T>
+template <typename T> //Done
 vector<vector<vertex<T>>> strongly_connected_components(directed_graph<T>& g) {
   //Tarjan's Algorithm
   vector<vector<vertex<T>>> result;
-  int n = g.num_vertices();
+  int n = g.num_vertices()+1;
   int dfn[n] = {0};
   int low[n];
   int dfn_cnt = 0;
-  //stack<int> s;
   stack<vertex<T>> s;
   set<int> in_s;
   for (auto u: g.get_vertices()) {
@@ -94,8 +93,7 @@ vector<vector<vertex<T>>> strongly_connected_components(directed_graph<T>& g) {
   return result;
 }
 
-
-template <typename T>
+template <typename T> //Done
 void sccRecursive(vertex<T>& u, int dfn[], int low[], int& dfn_cnt, stack<vertex<T>>& s, set<int>& in_s, vector<vector<vertex<T>>>& result, directed_graph<T>& g) {
   low[u.id] = dfn[u.id] = ++dfn_cnt;
   s.push(u); 
