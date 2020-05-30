@@ -77,58 +77,51 @@ vector<vertex<T>> shortest_path(directed_graph<T>& g, const int& u_id, const int
 
 template <typename T>
 vector<vector<vertex<T>>> strongly_connected_components(directed_graph<T>& g) {
+  //Tarjan's Algorithm
   vector<vector<vertex<T>>> result;
   int n = g.num_vertices();
-  int dfn[n] = {0}, low[n], dfn_cnt = 0;
+  int dfn[n] = {0};
+  int low[n];
+  int dfn_cnt = 0;
   stack<int> s;
   set<int> in_s;
-  set<set<int>> all_sccs;
-
   for (auto u: g.get_vertices()) {
     if (!dfn[u.id]) {
-      sccRecursive(u.id, dfn, low, dfn_cnt, s, in_s, all_sccs, result, g);
+      sccRecursive(u.id, dfn, low, dfn_cnt, s, in_s, result, g);
     }
   }
-
-
   return result;
 }
 
 
 template <typename T>
-void sccRecursive(int& u_id, int dfn[], int low[], int& dfn_cnt, stack<int>& s, set<int>& in_s, set<set<int>>& all_sccs, vector<vector<vertex<T>>>& result, directed_graph<T>& g) {
+void sccRecursive(int& u_id, int dfn[], int low[], int& dfn_cnt, stack<int>& s, set<int>& in_s, vector<vector<vertex<T>>>& result, directed_graph<T>& g) {
   low[u_id] = dfn[u_id] = ++dfn_cnt;
-  s.push(u_id); in_s.insert(u_id);
-   
+  s.push(u_id); 
+  in_s.insert(u_id);
   for (auto v: g.get_neighbours(u_id)) {
     if (!dfn[v.id]) {
-      sccRecursive(v.id, dfn, low, dfn_cnt, s, in_s, all_sccs, result, g);
+      sccRecursive(v.id, dfn, low, dfn_cnt, s, in_s, result, g);
       low[u_id] = min(low[u_id], low[v.id]);
     }
-
     else if (in_s.find(v.id) != in_s.end()) {
       low[u_id] = min(low[u_id], dfn[v.id]);
     }
   }
-
   if (dfn[u_id] == low[u_id]) {
-    set<int> scc;
     vector<vertex<T>> vertices;
-    while (s.top() != u_id) {
-      scc.insert(s.top()); 
+    while (s.top() != u_id) { 
       vertices.push_back({s.top(), g.get_vertices().at(s.top()).weight});
       in_s.erase(s.top());
       s.pop();
     }
-    scc.insert(s.top()); 
     vertices.push_back({s.top(), g.get_vertices().at(s.top()).weight});
     in_s.erase(s.top()); 
-    s.pop(); 
-    all_sccs.insert(scc);   
+    s.pop();   
     result.push_back(vertices);
   }
-
 }
+
 
 /*
  * Computes a topological ordering of the vertices.
