@@ -31,12 +31,25 @@ int main() {
 	g1.add_edge(4, 5, 5); //D-E
 	g1.add_edge(2, 5, 3); //B-E
 
+	cout << "Shortest Path: " << endl;
+	vector<vertex<double>> sp = shortest_path<double>(g1, 1, 2);
+    for (vertex<double> spv : sp) {
+		cout << "(" << spv.id << ", " << spv.weight << ") ";   
+    }
+
+	cout << endl;
+
     cout << "Strongly connected: " << endl;
-	vector<vertex<double>> sc = strongly_connected_components(g1);
-	//for (vector<vertex<double>> scv : sc) {
-            for (vertex<double> scva : sc) {
+	vector<vector<vertex<double>>> sc = strongly_connected_components(g1);
+	int count = 0;
+	for (vector<vertex<double>> scv : sc) {
+		cout << "Pair: " << scv.at(0).id << " ";
+            for (vertex<double> scva : scv) {
 	 	        cout << "(" << scva.id << ", " << scva.weight << ") ";   
+				count ++;
             }     
-  //  }
+    }
+	cout << "Total: " << count << " " << endl;
+
  
 }

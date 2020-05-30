@@ -68,7 +68,8 @@ class directed_graph { //Graph Class
 		vector<vertex<T>> post_order_traversal(const int&, directed_graph<T>&); // returns the vertices in ther visiting order of a post-order traversal of the minimum spanning tree starting at the given vertex.
 
 		vector<vertex<T>> significance_sorting(); // Return a vector containing a sorted list of the vertices in descending order of their significance.
-		bool vector_contains(const vector<int> u_id, const int& searchItem);
+		bool vector_contains(const vector<int> list, const int& searchItem);
+		vertex<T> smallest_edge(directed_graph<T>& g, vector<vertex<T>> vertices);
 
 	};
 
@@ -418,5 +419,20 @@ bool directed_graph<T>::vector_contains(const vector<int> list, const int& searc
 	}
 	return false;
 }
+
+// template <typename T> //Done
+// vertex<T> directed_graph<T>::smallest_edge(directed_graph<T>& g, int& u_id, int& v_id, vector<vertex<T>> vertices) {
+// 	vertex<T> vertex;
+// 	vertex<T> tempVertex = vertices.at(0);
+
+// 	for (int i = 1; vertices.size(); i++) {
+// 		if (
+		
+// 	}
+
+
+
+// 	return vertex;
+// }
 
 #endif
