@@ -120,10 +120,9 @@ void sccRecursive(vertex<T>& u, int dfn[], int low[], int& dfn_cnt, stack<vertex
  * neighbours v, v appears later in the order than u.
  * You will be given a DAG as the argument.
  */
-template <typename T>
+template <typename T> //Done
 vector<vertex<T>> topological_sort(directed_graph<T>& g) {
   vector<vertex<T>> vertices;
-  vector<vertex<T>> final;
   int num_vertices = g.num_vertices();
   
   bool *visited = new bool [num_vertices];
@@ -140,14 +139,13 @@ vector<vertex<T>> topological_sort(directed_graph<T>& g) {
   return vertices;
 }
 
-template <typename T>
+template <typename T> //Done
 void topological_sort_util(directed_graph<T>& g, int node, bool visited[], vector<vertex<T>>& vertices) {
   visited[node] = true;
   vector<vertex<T>> neighbours = g.get_neighbours(node);
-  vector<vertex<double>>::iterator i;
-  for (i = neighbours.begin(); i != neighbours.end(); i++) {
-    if (!visited[i->id]) {
-      topological_sort_util(g, i->id, visited, vertices);
+  for (vertex<T> i: neighbours){
+    if (!visited[i.id]) {
+      topological_sort_util(g, i.id, visited, vertices);
     }
   }
   if (g.getVertex(node).id != -2) {
