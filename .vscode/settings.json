@@ -11,6 +11,14 @@
         "unordered_set": "cpp",
         "string_view": "cpp",
         "initializer_list": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "exception": "cpp",
+        "istream": "cpp",
+        "stdexcept": "cpp",
+        "tuple": "cpp",
+        "type_traits": "cpp",
+        "utility": "cpp",
+        "*.tcc": "cpp",
+        "streambuf": "cpp"
     }
 }

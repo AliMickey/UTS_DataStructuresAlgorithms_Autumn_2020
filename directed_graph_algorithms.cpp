@@ -31,41 +31,35 @@ using namespace std;
 template <typename T>
 vector<vertex<T>> shortest_path(directed_graph<T>& g, const int& u_id, const int& v_id) {
   vector<vertex<T>> vertices;
-
   if (g.reachable(u_id, v_id)) {
     vector<int> toDoList;
     vector<int> doneList;
     vector<vertex<T>> neighbours;
+    vector<vertex<T>> tempGet = g.get_vertices();
+    int totalEdgeCost = 99999;
     toDoList.push_back(u_id); //Add source id to toDo
-    //vertices.push_back(find(g.get_vertices().begin(), g.get_vertices().end(), u_id) != g.get_vertices().end()))
+    vertices.push_back(g.findVertex(tempGet, u_id)); //Add source vertex 
     while (toDoList.size() != 0) { //While toDo is not empty
       doneList.push_back(toDoList.back()); //Add ID to done list
       neighbours = g.get_neighbours(toDoList.back()); //Get neighbours of last added ID
+      int temptoDoBack = toDoList.back();
       toDoList.pop_back(); //Remove ID from toDo
       for (int i = 0; i < neighbours.size(); i++) { //For each neighbour of ID
         if (neighbours.at(i).id == v_id) { //If neighbour ID is destination ID
-          vertices.push_back(g.get_vertices().at(g.num_vertices()-v_id));
-          break;
+          vertices.push_back(g.findVertex(tempGet, v_id)); //Add dest vertex
+          return vertices; //Return and break loop
         }
-        //get smallest edge vertex from function
-        //change below neighbours[i].id to smallest vertex.id
-
-        if (!g.vector_contains(doneList, neighbours[i].id)) { //If smallest edge vertex ID is not in done list 
-          toDoList.push_back(neighbours[i].id); //Add it to do list
-
+      }
+      if (neighbours.size() > 0) { //If there are neighbours
+        vertex<T> leastCostVertex = g.smallest_edge(g, temptoDoBack, neighbours, totalEdgeCost); //Make the neighbour vertex with least edge cost
+        if (!g.vector_contains(doneList, leastCostVertex.id)) { //If smallest edge vertex ID is not in done list 
+          toDoList.push_back(leastCostVertex.id); //Add it to do list
+          vertices.push_back(g.findVertex(tempGet, leastCostVertex.id));
         } 
       }
-      neighbours.clear(); //Delete all neighbours for next iteration
     }
-
   }
-
-  else {
-    return vector<vertex<T>>();
-  }
-
   return vertices;
-
 }
 
 /*
@@ -74,7 +68,6 @@ vector<vertex<T>> shortest_path(directed_graph<T>& g, const int& u_id, const int
  * such that for every pair u, v of vertices in the subset,
  * v is reachable from u and u is reachable from v.
  */
-
 template <typename T> //Done
 vector<vector<vertex<T>>> strongly_connected_components(directed_graph<T>& g) {
   //Tarjan's Algorithm
@@ -121,7 +114,6 @@ void sccRecursive(vertex<T>& u, int dfn[], int low[], int& dfn_cnt, stack<vertex
   }
 }
 
-
 /*
  * Computes a topological ordering of the vertices.
  * For every vertex u in the order, and any of its
@@ -130,10 +122,40 @@ void sccRecursive(vertex<T>& u, int dfn[], int low[], int& dfn_cnt, stack<vertex
  */
 template <typename T>
 vector<vertex<T>> topological_sort(directed_graph<T>& g) {
+  vector<vertex<T>> vertices;
+  vector<vertex<T>> final;
+  int num_vertices = g.num_vertices();
+  
+  bool *visited = new bool [num_vertices];
+  for (int i = 0; i < num_vertices; i++) {
+    visited[i] = false;
+  }
 
-  return vector<vertex<T>>();
-
+  for (int i = 0; i < num_vertices; i++) {
+    if (visited[i] == false) {
+      topological_sort_util(g, i, visited, vertices);
+    }
+  }
+  reverse(vertices.begin(), vertices.end());
+  return vertices;
 }
+
+template <typename T>
+void topological_sort_util(directed_graph<T>& g, int node, bool visited[], vector<vertex<T>>& vertices) {
+  visited[node] = true;
+  vector<vertex<T>> neighbours = g.get_neighbours(node);
+  vector<vertex<double>>::iterator i;
+  for (i = neighbours.begin(); i != neighbours.end(); i++) {
+    if (!visited[i->id]) {
+      topological_sort_util(g, i->id, visited, vertices);
+    }
+  }
+  if (g.getVertex(node).id != -2) {
+    vertices.push_back(g.getVertex(node));
+  }
+}
+
+
 
 /*
  * Computes the lowest cost-per-person for delivery over the graph.
