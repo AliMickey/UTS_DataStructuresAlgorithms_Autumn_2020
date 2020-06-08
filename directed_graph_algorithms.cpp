@@ -35,8 +35,7 @@ vector<vertex<T>> shortest_path(directed_graph<T>& g, const int& u_id, const int
     vector<int> toDoList;
     vector<int> doneList;
     vector<vertex<T>> neighbours;
-    vector<vertex<T>> tempGet = g.get_vertices();
-    int totalEdgeCost = 99999999;
+    int totalEdgeCost = 0;
     toDoList.push_back(u_id); //Add source id to toDo
     vertices.push_back(g.getVertex(u_id)); //Add source vertex 
     while (toDoList.size() != 0) { //While toDo is not empty
@@ -52,14 +51,17 @@ vector<vertex<T>> shortest_path(directed_graph<T>& g, const int& u_id, const int
       }
       if (neighbours.size() > 0) { //If there are neighbours
         vertex<T> leastCostVertex = g.smallest_edge(g, temptoDoBack, neighbours, totalEdgeCost); //Make the neighbour vertex with least edge cost
-        if (!g.vector_contains(doneList, leastCostVertex.id)) { //If smallest edge vertex ID is not in done list 
+        if (!g.vector_contains(doneList, leastCostVertex.id) && leastCostVertex.id != -3) { //If smallest edge vertex ID is not in done list 
           toDoList.push_back(leastCostVertex.id); //Add it to do list
           vertices.push_back(g.getVertex(leastCostVertex.id));
         } 
       }
     }
   }
-  return vertices;
+  if (g.findVertex(vertices, v_id).id == v_id){
+    return vertices;
+  }
+  return vector<vertex<T>>();
 }
 
 

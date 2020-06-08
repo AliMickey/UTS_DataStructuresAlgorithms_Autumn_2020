@@ -69,9 +69,10 @@ class directed_graph { //Graph Class
 
 		vector<vertex<T>> significance_sorting(); // Return a vector containing a sorted list of the vertices in descending order of their significance.
 		bool vector_contains(const vector<int> list, const int& searchItem);
-		vertex<T> smallest_edge(directed_graph<T>& g, int& source, vector<vertex<T>>& neighbours, int& totalEdgeCost);
-		vertex<T> findVertex(vector<vertex<T>>& vertices, int vertexID);
+		vertex<T> smallest_edge(directed_graph<T>& g, int source, vector<vertex<T>> neighbours, int& totalEdgeCost);
+		vertex<T> findVertex(vector<vertex<T>> vertices, int vertexID);
 		vertex<T> getVertex(int vertexID);
+		int getEdgeID(directed_graph<T>& g);
 
 	};
 
@@ -422,13 +423,14 @@ bool directed_graph<T>::vector_contains(const vector<int> list, const int& searc
 }
 
 template <typename T> //Done
-vertex<T> directed_graph<T>::smallest_edge(directed_graph<T>& g, int& source, vector<vertex<T>>& neighbours, int& totalEdgeCost) {
-	vertex<T> vertex = neighbours.at(0); //Set initial to first vertex
-	int tempWeight = g.adj_list[source].find(neighbours[0].id)->second; //Set temp weight to cost of first neighbour's edge
+vertex<T> directed_graph<T>::smallest_edge(directed_graph<T>& g, int source, vector<vertex<T>> neighbours, int& totalEdgeCost) {
+	vertex<T> vertex = {-3,0};
+	int tempWeight = 99999;
 	for (int i = 0; i < neighbours.size(); i++) {
-		if ((g.adj_list[source].find(neighbours[i].id)->second) < tempWeight) {
-			tempWeight = g.adj_list[source].find(neighbours[i].id)->second;
-			totalEdgeCost += tempWeight;
+		int tempNeighbourWeight = g.adj_list[source].find(neighbours[i].id)->second;
+		if (tempNeighbourWeight <= tempNeighbourWeight + totalEdgeCost && tempNeighbourWeight < tempWeight) {
+			tempWeight = tempNeighbourWeight;
+			totalEdgeCost += tempNeighbourWeight;
 			vertex = getVertex(neighbours[i].id);
 		}
 	}
@@ -436,7 +438,7 @@ vertex<T> directed_graph<T>::smallest_edge(directed_graph<T>& g, int& source, ve
 }
 
 template <typename T> //Done
-vertex<T> directed_graph<T>::findVertex(vector<vertex<T>>& vertices, int vertexID) {
+vertex<T> directed_graph<T>::findVertex(vector<vertex<T>> vertices, int vertexID) {
 	vertex<T> vertex = {-1,0};
 	for (auto const& vert : vertices) {
     	if (vert.id == vertexID){
@@ -457,4 +459,9 @@ vertex<T> directed_graph<T>::getVertex(int vertexID) {
 	return vertex;
 }
 
+template <typename T>
+int directed_graph<T>::getEdgeID(directed_graph<T>& g){
+	return g.adj_list[1].find(3)->second;
+
+} 
 #endif

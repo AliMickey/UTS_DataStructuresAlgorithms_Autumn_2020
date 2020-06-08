@@ -30,6 +30,7 @@ int main() {
 	g1.add_edge(4, 1, 1); //D-A
 	g1.add_edge(4, 5, 5); //D-E
 	g1.add_edge(2, 5, 3); //B-E
+	g1.add_edge(2,4,20);
 
 	
 
@@ -60,6 +61,8 @@ int main() {
     }
 
 	cout << endl;
+
+	cout << g1.getEdgeID(g1);
 
  
 }
