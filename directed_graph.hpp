@@ -429,7 +429,7 @@ vertex<T> directed_graph<T>::smallest_edge(directed_graph<T>& g, int& source, ve
 		if ((g.adj_list[source].find(neighbours[i].id)->second) < tempWeight) {
 			tempWeight = g.adj_list[source].find(neighbours[i].id)->second;
 			totalEdgeCost += tempWeight;
-			vertex = {g.adj_list[source].find(neighbours[i].id)->first, g.adj_list[source].find(neighbours[i].id)->second};
+			vertex = getVertex(neighbours[i].id);
 		}
 	}
 	return vertex;
