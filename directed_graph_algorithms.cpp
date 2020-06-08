@@ -62,6 +62,7 @@ vector<vertex<T>> shortest_path(directed_graph<T>& g, const int& u_id, const int
   return vertices;
 }
 
+
 /*
  * Computes the strongly connected components of the graph.
  * A strongly connected component is a subset of the vertices
@@ -114,6 +115,7 @@ void sccRecursive(vertex<T>& u, int dfn[], int low[], int& dfn_cnt, stack<vertex
   }
 }
 
+
 /*
  * Computes a topological ordering of the vertices.
  * For every vertex u in the order, and any of its
@@ -122,37 +124,34 @@ void sccRecursive(vertex<T>& u, int dfn[], int low[], int& dfn_cnt, stack<vertex
  */
 template <typename T> //Done
 vector<vertex<T>> topological_sort(directed_graph<T>& g) {
-  vector<vertex<T>> vertices;
+  vector<vertex<T>> vertices; 
   int num_vertices = g.num_vertices();
-  
-  bool *visited = new bool [num_vertices];
-  for (int i = 0; i < num_vertices; i++) {
+  bool *visited = new bool [num_vertices]; //Initialise done array
+  for (int i = 0; i < num_vertices; i++) { //Set all indexes in array as unvisited
     visited[i] = false;
   }
-
-  for (int i = 0; i < num_vertices; i++) {
-    if (visited[i] == false) {
-      topological_sort_util(g, i, visited, vertices);
+  for (int i = 0; i < num_vertices; i++) { //For each vertex in array
+    if (visited[i] == false) { //If unvisited
+      topological_sort_util(g, i, visited, vertices); //Perform topo
     }
   }
-  reverse(vertices.begin(), vertices.end());
+  reverse(vertices.begin(), vertices.end()); //Once all vertices are added to result, reverse the order for final return
   return vertices;
 }
 
 template <typename T> //Done
 void topological_sort_util(directed_graph<T>& g, int node, bool visited[], vector<vertex<T>>& vertices) {
-  visited[node] = true;
-  vector<vertex<T>> neighbours = g.get_neighbours(node);
-  for (vertex<T> i: neighbours){
-    if (!visited[i.id]) {
-      topological_sort_util(g, i.id, visited, vertices);
+  visited[node] = true; //Set current node as visited
+  vector<vertex<T>> neighbours = g.get_neighbours(node); //Get neighbours for current node
+  for (vertex<T> i: neighbours) { //For every neighbour
+    if (!visited[i.id]) { //If it is not visited already
+      topological_sort_util(g, i.id, visited, vertices); //Perform topo sort
     }
   }
-  if (g.getVertex(node).id != -2) {
-    vertices.push_back(g.getVertex(node));
+  if (g.getVertex(node).id != -2) { //If return is not empty vertex
+    vertices.push_back(g.getVertex(node)); //Add it to result
   }
 }
-
 
 
 /*
