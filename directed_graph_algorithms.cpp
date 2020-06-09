@@ -18,6 +18,7 @@
 #include <optional>
 #include <exception>
 #include <stdexcept>
+#include<bits/stdc++.h> 
 
 #include "directed_graph.hpp"
 
@@ -28,40 +29,42 @@ using namespace std;
  * The shortest path corresponds to a sequence of vertices starting from u and ends at v,
  * which has the smallest total weight of edges among all possible paths from u to v.
  */
-template <typename T>
+template <typename T> //Done
 vector<vertex<T>> shortest_path(directed_graph<T>& g, const int& u_id, const int& v_id) {
+  vector<vertex<T>> neighbours;
   vector<vertex<T>> vertices;
-  if (g.reachable(u_id, v_id)) {
-    vector<int> toDoList;
-    vector<int> doneList;
-    vector<vertex<T>> neighbours;
-    int totalEdgeCost = 0;
-    toDoList.push_back(u_id); //Add source id to toDo
-    vertices.push_back(g.getVertex(u_id)); //Add source vertex 
-    while (toDoList.size() != 0) { //While toDo is not empty
-      doneList.push_back(toDoList.back()); //Add ID to done list
-      neighbours = g.get_neighbours(toDoList.back()); //Get neighbours of last added ID
-      int temptoDoBack = toDoList.back();
-      toDoList.pop_back(); //Remove ID from toDo
-      for (int i = 0; i < neighbours.size(); i++) { //For each neighbour of ID
-        if (neighbours.at(i).id == v_id) { //If neighbour ID is destination ID
-          vertices.push_back(g.getVertex(v_id)); //Add dest vertex
-          return vertices; //Return and break loop
+  set<pair<int,int>> setds; 
+  vector<int> dist(g.num_vertices()+1, 9999999); //Create dist array to store shortest distance for each vertex
+  vector<int> prev(g.num_vertices()+1, 0); //Creat prev array to store previous shortest vertex for each vertex
+  setds.insert(make_pair(0, u_id)); //Insert source and set dest to 0
+  dist[u_id] = 0; 
+  while (!setds.empty()) { 
+    pair<int, int> temp = *(setds.begin()); //Set temp to top vertex in set
+    setds.erase(setds.begin()); //Remove it from set
+    int u = temp.second; //Set temp vertex to vertex id
+    neighbours = g.get_neighbours(u); //Neighbours of current vertex
+    for (auto vert: neighbours) { 
+      int v = vert.id; //Neighbour id
+      int weight = g.edgeCost(u, v); //current-neighbour edge cost
+      if (dist[v] > dist[u] + weight) { //If current distance is smaller than total 
+        if (dist[v] != 9999999) {
+          setds.erase(setds.find(make_pair(dist[v], v))); //Update dist[neighbour] with updated distance
         }
-      }
-      if (neighbours.size() > 0) { //If there are neighbours
-        vertex<T> leastCostVertex = g.smallest_edge(g, temptoDoBack, neighbours, totalEdgeCost); //Make the neighbour vertex with least edge cost
-        if (!g.vector_contains(doneList, leastCostVertex.id) && leastCostVertex.id != -3) { //If smallest edge vertex ID is not in done list 
-          toDoList.push_back(leastCostVertex.id); //Add it to do list
-          vertices.push_back(g.getVertex(leastCostVertex.id));
-        } 
+        dist[v] = dist[u] + weight; //Set new distance
+        prev[v] = u; //Set previous of shortest neighbour to curr
+        setds.insert(make_pair(dist[v], v)); //Add to set
       }
     }
   }
-  if (g.findVertex(vertices, v_id).id == v_id){
-    return vertices;
-  }
-  return vector<vertex<T>>();
+  //Trace our way back from target to source by using prev[]
+  int currentTempVertex = v_id; //Set initial temp to target
+  while (prev[currentTempVertex] != 0) { //While previous is not 0
+    vertices.push_back(g.getVertex(currentTempVertex)); //Add the vertex to 
+    currentTempVertex = prev[currentTempVertex]; //Set current to prev
+  } 
+  vertices.push_back(g.getVertex(u_id)); //Add source vertex
+  reverse(vertices.begin(), vertices.end()); //Reverse for final return
+  return vertices;  
 }
 
 

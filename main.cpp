@@ -35,9 +35,9 @@ int main() {
 	
 
 	cout << "Shortest Path: " << endl;
-	vector<vertex<double>> sp = shortest_path<double>(g1, 1, 4);
-    for (vertex<double> spv : sp) {
-		cout << "(" << spv.id << ", " << spv.weight << ") ";   
+	vector<vertex<double>> spu = shortest_path(g1, 1, 4);
+    for (vertex<double> spup : spu) {
+		cout << "(" << spup.id << ", " << spup.weight << ") ";   
     }
 
 	cout << endl;
@@ -61,8 +61,6 @@ int main() {
     }
 
 	cout << endl;
-
-	cout << g1.getEdgeID(g1);
 
  
 }

@@ -69,10 +69,11 @@ class directed_graph { //Graph Class
 
 		vector<vertex<T>> significance_sorting(); // Return a vector containing a sorted list of the vertices in descending order of their significance.
 		bool vector_contains(const vector<int> list, const int& searchItem);
-		vertex<T> smallest_edge(directed_graph<T>& g, int source, vector<vertex<T>> neighbours, int& totalEdgeCost);
+		vertex<T> smallest_edge(directed_graph<T>& g, int source, vector<vertex<T>> neighbours);
 		vertex<T> findVertex(vector<vertex<T>> vertices, int vertexID);
 		vertex<T> getVertex(int vertexID);
 		int getEdgeID(directed_graph<T>& g);
+		int edgeCost(int source, int destination);
 
 	};
 
@@ -423,18 +424,22 @@ bool directed_graph<T>::vector_contains(const vector<int> list, const int& searc
 }
 
 template <typename T> //Done
-vertex<T> directed_graph<T>::smallest_edge(directed_graph<T>& g, int source, vector<vertex<T>> neighbours, int& totalEdgeCost) {
+vertex<T> directed_graph<T>::smallest_edge(directed_graph<T>& g, int source, vector<vertex<T>> neighbours) {
 	vertex<T> vertex = {-3,0};
 	int tempWeight = 99999;
 	for (int i = 0; i < neighbours.size(); i++) {
-		int tempNeighbourWeight = g.adj_list[source].find(neighbours[i].id)->second;
-		if (tempNeighbourWeight <= tempNeighbourWeight + totalEdgeCost && tempNeighbourWeight < tempWeight) {
+		int tempNeighbourWeight = g.getVertex(neighbours[i].id).weight;
+		if (tempNeighbourWeight <= tempWeight) {
 			tempWeight = tempNeighbourWeight;
-			totalEdgeCost += tempNeighbourWeight;
 			vertex = getVertex(neighbours[i].id);
 		}
 	}
 	return vertex;
+}
+
+template <typename T> 
+int directed_graph<T>::edgeCost(int source, int destination) {
+	return adj_list[source].find(destination)->second;
 }
 
 template <typename T> //Done
