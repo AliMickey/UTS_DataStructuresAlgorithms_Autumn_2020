@@ -47,7 +47,7 @@ vector<vertex<T>> shortest_path(directed_graph<T>& g, const int& u_id, const int
     neighbours = g.get_neighbours(u); //Neighbours of current vertex
     for (auto vert: neighbours) { 
       int v = vert.id; //Neighbour id
-      int weight = g.edgeCost(u, v); //current-neighbour edge cost
+      int weight = g.edge_cost(u, v); //current-neighbour edge cost
       if (dist[v] > dist[u] + weight) { //If current distance is smaller than total 
         if (dist[v] != 9999999) {
           setds.erase(setds.find(make_pair(dist[v], v))); //Update dist[neighbour] with updated distance
@@ -61,10 +61,10 @@ vector<vertex<T>> shortest_path(directed_graph<T>& g, const int& u_id, const int
   //Trace our way back from target to source by using prev[]
   int currentTempVertex = v_id; //Set initial temp to target
   while (prev[currentTempVertex] != 0) { //While previous is not 0
-    vertices.push_back(g.getVertex(currentTempVertex)); //Add the vertex to 
+    vertices.push_back(g.get_vertex(currentTempVertex)); //Add the vertex to 
     currentTempVertex = prev[currentTempVertex]; //Set current to prev
   } 
-  vertices.push_back(g.getVertex(u_id)); //Add source vertex
+  vertices.push_back(g.get_vertex(u_id)); //Add source vertex
   reverse(vertices.begin(), vertices.end()); //Reverse for final return
   return vertices;  
 }
@@ -155,8 +155,8 @@ void topological_sort_util(directed_graph<T>& g, int node, bool visited[], vecto
       topological_sort_util(g, i.id, visited, vertices); //Perform topo sort
     }
   }
-  if (g.getVertex(node).id != -2) { //If return is not empty vertex
-    vertices.push_back(g.getVertex(node)); //Add it to result
+  if (g.get_vertex(node).id != -2) { //If return is not empty vertex
+    vertices.push_back(g.get_vertex(node)); //Add it to result
   }
 }
 
@@ -170,23 +170,31 @@ void topological_sort_util(directed_graph<T>& g, int node, bool visited[], vecto
  */
 template <typename T>
 T low_cost_delivery(directed_graph<T>& g, int u_id) {
-  double totalVertexWeight; //5131
-  double totalEdgeWeight;
+  double totalVertexWeight; //2431
+  double totalEdgeWeight; //9701
   vector<vertex<T>> vertices = g.get_vertices();
-  
-  for (int i = 0; i < vertices.size(); i++){
-    totalVertexWeight += vertices[i].weight;
+  vector<int> edgeCosts = g.all_edge_cost();
+  for (auto vert1: vertices) {
+    totalVertexWeight += vert1.weight;
   }
-
-  //for each shortest path weight from u_id to other nodes
-  
-  for (int i = 0; i < g.num_vertices(); i++) {
-
-
+  for (auto vert2: vertices) { //For every vertex
+    double tempCost = shortest_path_cost(g, u_id, vert2.id); //Get its distance
+    bool reduced = false; 
+    
+    for (auto x: edgeCosts) { //For every edge 
+      if (g.vector_contains(edgeCosts, tempCost - x )){ //If dist - edge exists in all edges
+        totalEdgeWeight += tempCost - x; //Add it to total
+        reduced = true;
+        break;
+      }
+    }
+    if (!reduced) {
+        totalEdgeWeight += tempCost;
+      }
   }
+    
   
-  return totalVertexWeight;
-
+  return totalEdgeWeight;
 }
 
 template <typename T> //Done
@@ -194,17 +202,17 @@ double shortest_path_cost(directed_graph<T>& g, const int& u_id, const int& v_id
   //https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-using-set-in-stl/
   vector<vertex<T>> neighbours;
   set<pair<int,int>> setds; 
-  vector<int> dist(g.num_vertices()+1, 9999999); //Create dist array to store shortest distance for each vertex
+  vector<double> dist(g.num_vertices()+1, 9999999); //Create dist array to store shortest distance for each vertex
   setds.insert(make_pair(0, u_id)); //Insert source and set dest to 0
   dist[u_id] = 0; 
   while (!setds.empty()) { 
-    pair<int, int> temp = *(setds.begin()); //Set temp to top vertex in set
+    pair<double, int> temp = *(setds.begin()); //Set temp to top vertex in set
     setds.erase(setds.begin()); //Remove it from set
     int u = temp.second; //Set temp vertex to vertex id
     neighbours = g.get_neighbours(u); //Neighbours of current vertex
     for (auto vert: neighbours) { 
       int v = vert.id; //Neighbour id
-      int weight = g.edgeCost(u, v); //current-neighbour edge cost
+      double weight = g.edge_cost(u, v); //current-neighbour edge cost
       if (dist[v] > dist[u] + weight) { //If current distance is smaller than total 
         if (dist[v] != 9999999) {
           setds.erase(setds.find(make_pair(dist[v], v))); //Update dist[neighbour] with updated distance

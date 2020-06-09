@@ -12,7 +12,7 @@ int main() {
     directed_graph<double> g1;
 
 	vertex<double> v1(1, 800); //A
-	vertex<double> v2(2, 3000); //B
+	vertex<double> v2(2, 300); //B
 	vertex<double> v3(3, 400); //C
 	vertex<double> v4(4, 710); //D
 	vertex<double> v5(5, 221); //E
@@ -56,9 +56,7 @@ int main() {
     for (vertex<double> tpv : tp) {
 		cout << "(" << tpv.id << ", " << tpv.weight << ") ";   
     }
-
 	cout << endl;
-
 	cout << "Delivery cost: " << low_cost_delivery(g1, 1) << endl;
  
 }
