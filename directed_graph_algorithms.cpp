@@ -32,6 +32,7 @@ using namespace std;
  */
 template <typename T> //Done
 vector<vertex<T>> shortest_path(directed_graph<T>& g, const int& u_id, const int& v_id) {
+  //https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-using-set-in-stl/
   vector<vertex<T>> neighbours;
   vector<vertex<T>> vertices;
   set<pair<int,int>> setds; 
@@ -169,18 +170,49 @@ void topological_sort_util(directed_graph<T>& g, int node, bool visited[], vecto
  */
 template <typename T>
 T low_cost_delivery(directed_graph<T>& g, int u_id) {
-  int totalVertexWeight; //5131
-  int totalEdgeWeight;
+  double totalVertexWeight; //5131
+  double totalEdgeWeight;
   vector<vertex<T>> vertices = g.get_vertices();
   
   for (int i = 0; i < vertices.size(); i++){
-    totalVertexWeight = totalVertexWeight + vertices[i].weight;
+    totalVertexWeight += vertices[i].weight;
   }
 
   //for each shortest path weight from u_id to other nodes
   
-  for ()
+  for (int i = 0; i < g.num_vertices(); i++) {
+
+
+  }
   
   return totalVertexWeight;
 
+}
+
+template <typename T> //Done
+double shortest_path_cost(directed_graph<T>& g, const int& u_id, const int& v_id) {
+  //https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-using-set-in-stl/
+  vector<vertex<T>> neighbours;
+  set<pair<int,int>> setds; 
+  vector<int> dist(g.num_vertices()+1, 9999999); //Create dist array to store shortest distance for each vertex
+  setds.insert(make_pair(0, u_id)); //Insert source and set dest to 0
+  dist[u_id] = 0; 
+  while (!setds.empty()) { 
+    pair<int, int> temp = *(setds.begin()); //Set temp to top vertex in set
+    setds.erase(setds.begin()); //Remove it from set
+    int u = temp.second; //Set temp vertex to vertex id
+    neighbours = g.get_neighbours(u); //Neighbours of current vertex
+    for (auto vert: neighbours) { 
+      int v = vert.id; //Neighbour id
+      int weight = g.edgeCost(u, v); //current-neighbour edge cost
+      if (dist[v] > dist[u] + weight) { //If current distance is smaller than total 
+        if (dist[v] != 9999999) {
+          setds.erase(setds.find(make_pair(dist[v], v))); //Update dist[neighbour] with updated distance
+        }
+        dist[v] = dist[u] + weight; //Set new distance
+        setds.insert(make_pair(dist[v], v)); //Add to set
+      }
+    }
+  }
+  return dist[v_id];  
 }
