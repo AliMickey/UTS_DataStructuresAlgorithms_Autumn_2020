@@ -169,7 +169,18 @@ void topological_sort_util(directed_graph<T>& g, int node, bool visited[], vecto
  */
 template <typename T>
 T low_cost_delivery(directed_graph<T>& g, int u_id) {
+  int totalVertexWeight; //5131
+  int totalEdgeWeight;
+  vector<vertex<T>> vertices = g.get_vertices();
+  
+  for (int i = 0; i < vertices.size(); i++){
+    totalVertexWeight = totalVertexWeight + vertices[i].weight;
+  }
 
-  return 0;
+  //for each shortest path weight from u_id to other nodes
+  
+  for ()
+  
+  return totalVertexWeight;
 
 }

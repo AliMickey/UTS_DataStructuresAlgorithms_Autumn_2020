@@ -23,16 +23,13 @@ int main() {
 	g1.add_vertex(v4);
 	g1.add_vertex(v5);
 
-	g1.add_edge(1, 2, 6); //A-B
-	g1.add_edge(1, 3, 9); //A-C 
-	g1.add_edge(3, 4, 4); //C-D
-	g1.add_edge(4, 3, 7); //D-C
+	g1.add_edge(1, 2, 600); //A-B
+	g1.add_edge(1, 3, 900); //A-C 
+	g1.add_edge(3, 4, 4000); //C-D
+	g1.add_edge(4, 3, 700); //D-C
 	g1.add_edge(4, 1, 1); //D-A
-	g1.add_edge(4, 5, 5); //D-E
-	g1.add_edge(2, 5, 3); //B-E
-	g1.add_edge(2,4,20);
-
-	
+	g1.add_edge(4, 5, 500); //D-E
+	g1.add_edge(2, 5, 3000); //B-E
 
 	cout << "Shortest Path: " << endl;
 	vector<vertex<double>> spu = shortest_path(g1, 1, 4);
@@ -62,5 +59,6 @@ int main() {
 
 	cout << endl;
 
+	cout << "Delivery cost: " << low_cost_delivery(g1, 1) << endl;
  
 }
