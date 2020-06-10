@@ -168,33 +168,32 @@ void topological_sort_util(directed_graph<T>& g, int node, bool visited[], vecto
  * edge weights denote the fixed delivery cost between cities, which is irrelevant to 
  * the amount of goods being delivered. 
  */
-template <typename T>
+template <typename T> //Done
 T low_cost_delivery(directed_graph<T>& g, int u_id) {
-  double totalVertexWeight; //2431
-  double totalEdgeWeight; //9701
-  vector<vertex<T>> vertices = g.get_vertices();
-  vector<int> edgeCosts = g.all_edge_cost();
-  for (auto vert1: vertices) {
-    totalVertexWeight += vert1.weight;
+  double totalVertexWeight; //1631
+  double totalEdgeWeight; //8500
+  vector<vertex<T>> vertices = g.get_vertices(); //Get list of all vertices
+  vector<int> edgeCosts = g.all_edge_cost(); //Get list of all edge costs
+  for (auto vert1: vertices) { //For every vertex
+    if (vert1.id != u_id){ //Except source
+      totalVertexWeight += vert1.weight; //Add the weight
+    }
   }
   for (auto vert2: vertices) { //For every vertex
-    double tempCost = shortest_path_cost(g, u_id, vert2.id); //Get its distance
-    bool reduced = false; 
-    
+    double tempCost = shortest_path_cost(g, u_id, vert2.id); //Get its shortest distance
+    bool reduced = false; //Set temp boolean to track if (dist - edgeCosts[i]) exists
     for (auto x: edgeCosts) { //For every edge 
-      if (g.vector_contains(edgeCosts, tempCost - x )){ //If dist - edge exists in all edges
-        totalEdgeWeight += tempCost - x; //Add it to total
-        reduced = true;
+      if (g.vector_contains(edgeCosts, tempCost - x )){ //If (dist - edge) weight exists in all edges
+        totalEdgeWeight += (tempCost - x); //Add the net value to total
+        reduced = true; //Set to true and break the loop
         break;
       }
     }
-    if (!reduced) {
+    if (!reduced) { //If (dist - edge) does not exist then simply add the given weight to total
         totalEdgeWeight += tempCost;
       }
   }
-    
-  
-  return totalEdgeWeight;
+  return totalEdgeWeight/totalVertexWeight;
 }
 
 template <typename T> //Done
