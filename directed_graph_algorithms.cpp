@@ -198,7 +198,6 @@ T low_cost_delivery(directed_graph<T>& g, int u_id) {
 
 template <typename T> //Done
 double shortest_path_cost(directed_graph<T>& g, const int& u_id, const int& v_id) {
-  //https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-using-set-in-stl/
   vector<vertex<T>> neighbours;
   set<pair<int,int>> setds; 
   vector<double> dist(g.num_vertices()+1, 9999999); //Create dist array to store shortest distance for each vertex
