@@ -193,7 +193,8 @@ T low_cost_delivery(directed_graph<T>& g, int u_id) {
         totalEdgeWeight += tempCost;
       }
   }
-  return totalEdgeWeight/totalVertexWeight;
+  int temp = totalEdgeWeight/totalVertexWeight;
+  return temp;
 }
 
 template <typename T> //Done
