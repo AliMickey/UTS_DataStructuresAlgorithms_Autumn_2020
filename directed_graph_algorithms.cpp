@@ -79,16 +79,16 @@ vector<vertex<T>> shortest_path(directed_graph<T>& g, const int& u_id, const int
 template <typename T> //Done
 vector<vector<vertex<T>>> strongly_connected_components(directed_graph<T>& g) {
   //Tarjan's Algorithm
-  vector<vector<vertex<T>>> result;
-  int n = g.num_vertices()+1;
-  int dfn[n] = {0};
+  vector<vector<vertex<T>>> result; //Vector to contain vector of results
+  int n = g.num_vertices()+1; //Number of vertices for variable re-use
+  int dfn[n] = {0}; //Visited list
   int low[n];
   int dfn_cnt = 0;
-  stack<vertex<T>> s;
-  set<int> in_s;
-  for (auto u: g.get_vertices()) {
-    if (!dfn[u.id]) {
-      sccRecursive(u, dfn, low, dfn_cnt, s, in_s, result, g);
+  stack<vertex<T>> s; 
+  set<int> in_s; //Visited track
+  for (auto u: g.get_vertices()) { //For every vertex
+    if (!dfn[u.id]) { //If unvisited
+      sccRecursive(u, dfn, low, dfn_cnt, s, in_s, result, g); //Perform scc
     }
   }
   return result;
@@ -96,29 +96,29 @@ vector<vector<vertex<T>>> strongly_connected_components(directed_graph<T>& g) {
 
 template <typename T> //Done
 void sccRecursive(vertex<T>& u, int dfn[], int low[], int& dfn_cnt, stack<vertex<T>>& s, set<int>& in_s, vector<vector<vertex<T>>>& result, directed_graph<T>& g) {
-  low[u.id] = dfn[u.id] = ++dfn_cnt;
-  s.push(u); 
-  in_s.insert(u.id);
-  for (auto v: g.get_neighbours(u.id)) {
-    if (!dfn[v.id]) {
-      sccRecursive(v, dfn, low, dfn_cnt, s, in_s, result, g);
-      low[u.id] = min(low[u.id], low[v.id]);
+  low[u.id] = dfn[u.id] = ++dfn_cnt; //Initialise
+  s.push(u); //Add to stack
+  in_s.insert(u.id); //Mark current as visited
+  for (auto v: g.get_neighbours(u.id)) { //For every neighbour
+    if (!dfn[v.id]) { //If not visited
+      sccRecursive(v, dfn, low, dfn_cnt, s, in_s, result, g); //Perform scc
+      low[u.id] = min(low[u.id], low[v.id]); //Set up behind
     }
-    else if (in_s.find(v.id) != in_s.end()) {
-      low[u.id] = min(low[u.id], dfn[v.id]);
+    else if (in_s.find(v.id) != in_s.end()) { //If visited and in stack
+      low[u.id] = min(low[u.id], dfn[v.id]); //update low[u]
     }
   }
-  if (dfn[u.id] == low[u.id]) {
-    vector<vertex<T>> vertices;
-    while (s.top().id != u.id) { 
-      vertices.push_back(s.top());
-      in_s.erase(s.top().id);
-      s.pop();
+  if (dfn[u.id] == low[u.id]) { //If current is root vertex
+    vector<vertex<T>> vertices; //Set up list
+    while (s.top().id != u.id) { //Add all vertices above curr to list
+      vertices.push_back(s.top()); 
+      in_s.erase(s.top().id); //Remove it
+      s.pop(); //Remove it from stack
     }
-    vertices.push_back(s.top());
-    in_s.erase(s.top().id); 
-    s.pop();   
-    result.push_back(vertices);
+    vertices.push_back(s.top()); //Add u to list
+    in_s.erase(s.top().id); //Remove it
+    s.pop(); //Remove it from stack
+    result.push_back(vertices); //Add all vectors to list
   }
 }
 
