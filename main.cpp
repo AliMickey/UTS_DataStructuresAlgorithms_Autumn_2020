@@ -95,6 +95,15 @@ int main() {
 
 	cout << endl << " " << endl;
 
+	cout << "In order Traversal from 1: " << endl;
+
+	vector<vertex<double>> inOrder = g1.in_order_traversal(1, directedGraph);	
+	for (vertex<double> io : inOrder) {
+	 	cout << "(" << io.id << ", " << io.weight << ") ";
+	}
+
+	cout << endl << " " << endl;
+
 	cout << "Post order Traversal from 1: " << endl;
 
 	vector<vertex<double>> inorder = g1.post_order_traversal(1, directedGraph);	

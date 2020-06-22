@@ -344,30 +344,38 @@ vector<vertex<T>> directed_graph<T>::pre_order_traversal(const int& u_id, direct
 	return mst.depth_first(u_id);
 }
 
-template <typename T>
+template <typename T> //Done
 vector<vertex<T>> directed_graph<T>::in_order_traversal(const int& u_id, directed_graph<T>& mst) { 
 	vector<vertex<T>> vertices;
-
-
-
-
+	if (mst.adj_list[u_id].size() == 0) {
+		vertices.push_back(vertex(u_id, mst.all_vertices[u_id])); // visit the root
+	}
+	else {
+		bool visited_first_child = false;
+		for (auto e : mst.adj_list[u_id]) { // traverse subtrees
+			for (auto x : in_order_traversal(e.first, mst)) {
+				vertices.push_back(x);
+				if (!visited_first_child) {
+					vertices.push_back(vertex(u_id, mst.all_vertices[u_id])); // visit the root
+					visited_first_child = true;
+				}
+			}
+		}
+	}
 	return vertices; 
 }
 
-template <typename T>
+template <typename T> //Done
 vector<vertex<T>> directed_graph<T>::post_order_traversal(const int& u_id, directed_graph<T>& mst) { 
-
-	vector<vertex<T>> Tempvertices;
 	vector<vertex<T>> vertices;
-	
-	Tempvertices = mst.depth_first(u_id);
-	for (int i = Tempvertices.size()-1; i >= 0; i--) {
-		vertices.push_back(Tempvertices.at(i));
+	for(auto e : mst.adj_list[u_id]){ // traverse subtrees
+		for(auto x : post_order_traversal(e.first, mst)){
+			vertices.push_back(x);
+		}
 	}
-	
-	
-	
-	return vertices; 
+	vertices.push_back(vertex(u_id, mst.all_vertices[u_id])); // visit the root
+
+	return vertices;
 }
 
 template <typename T> //Done
